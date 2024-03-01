@@ -56,9 +56,22 @@
   border-radius: 10px;
   color: var(--text);
   background: linear-gradient(47deg, #2e00b1 0%, #8100bd 48.44%, #a400be 100%);
+
+  &:hover {
+    background: linear-gradient(47deg, #a400be 0%, #8100bd 50%, #2e00b1 100%, #2e00b1 100%);
+  }
+
+  &:focus {
+    background: linear-gradient(47deg, #2e00b1 0%, #a400be 50%, #2e00b1 100%, #2e00b1 100%);
+  }
+  
+  &:active {
+    background: #2e00b1;
+  }
 }
 
-.btnClose {
+
+.btnEye {
   position: absolute;
   top: -5%;
   right: 10px;
@@ -69,5 +82,12 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: none;
+  border: 1px solid transparent;
+  outline: none;
+
+  &:focus {
+    // outline: none;   
+    border-color: var(--borderColor);
+    border-radius: 6px;
+  }
 }

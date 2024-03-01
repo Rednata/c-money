@@ -1,22 +1,25 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import style from './Main.module.scss';
-import { AuthSlice } from '../../store/AuthStore/AuthSlice';
-import { useDispatch } from 'react-redux';
 import { ReactComponent as CloseEyeIcon } from './closeEye.svg';
 import { ReactComponent as OpenEyeIcon } from './openEye.svg';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
+import { tokenRequestAsync } from '../../store/tokenStore/tokenAsyncAction';
+import { URI_API } from '../../const/const';
 
 export const Main = () => {
   const [value, setValue] = useState({ login: '', password: '' });
-  const [passwordType, setPasswordType] = useState(true);
+  const [inputType, setInputType] = useState(true);
+  const token = useAppSelector(state => state.token.token);
+
+  const [auth, setAuth] = useState({ login: '', password: '' });
 
   const loginInput = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    // console.log(value);
-    dispatch(AuthSlice.actions.inputAuth(value));
+    setAuth(value);
   };
 
   const handleChange = (e: React.ChangeEvent<EventTarget>) => {
@@ -32,6 +35,34 @@ export const Main = () => {
   useEffect(() => {
     loginInput.current?.focus();
   }, []);
+
+  // Получаем токен
+  useEffect(() => {
+    if (auth.login) {
+      dispatch(tokenRequestAsync(auth));
+    }
+  }, [auth]);
+
+  // Получаем счета
+  useEffect(() => {
+    if (token) {
+      fetch(`${URI_API}/accounts`, {
+        headers: {
+          Authorization: `Basic ${token}`
+        }
+      })
+        .then(data => data.json())
+        .then(resp => console.log('resp1 >>', resp));
+
+      fetch(`${URI_API}/currencies`, {
+        headers: {
+          Authorization: `Basic ${token}`
+        }
+      })
+        .then(data => data.json())
+        .then(resp => console.log('resp2 >>', resp));
+    }
+  }, [token]);
 
   return (
     <main className={style.main}>
@@ -55,14 +86,13 @@ export const Main = () => {
             title="только латинские буквы (не менее 6), без пробелов"
             required
             pattern="[A-Za-z]{6,}"
-            // pattern="[A-Za-z]"
           />
           <label className={style.label} htmlFor="password">Пароль
           </label >
           <div className={style.inputWrap}>
             <input
               className={style.input}
-              type={passwordType ? 'password' : 'text'}
+              type={inputType ? 'password' : 'text'}
               id="password"
               name="password"
               autoComplete="off"
@@ -72,10 +102,10 @@ export const Main = () => {
               onChange={handleChange}
             />
             <button
-              className={style.btnClose}
-              onClick={() => setPasswordType(!passwordType)}
+              className={style.btnEye}
+              onClick={() => setInputType(!inputType)}
             >
-              {passwordType ? <CloseEyeIcon /> : <OpenEyeIcon />}
+              {inputType ? <CloseEyeIcon /> : <OpenEyeIcon />}
             </button>
           </div>
 
