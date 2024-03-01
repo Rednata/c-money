@@ -6,11 +6,19 @@ import { ReactComponent as OpenEyeIcon } from './openEye.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { tokenRequestAsync } from '../../store/tokenStore/tokenAsyncAction';
 import { URI_API } from '../../const/const';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../Button/Button';
+import {
+  accountRequestAsync } from '../../store/accountsStore/accountAsyncAction';
 
 export const Main = () => {
-  const [value, setValue] = useState({ login: '', password: '' });
+  const [value, setValue] = useState({
+    login: 'developer', password: 'methed'
+  });
   const [inputType, setInputType] = useState(true);
   const token = useAppSelector(state => state.token.token);
+
+  const navigate = useNavigate();
 
   const [auth, setAuth] = useState({ login: '', password: '' });
 
@@ -46,21 +54,16 @@ export const Main = () => {
   // Получаем счета
   useEffect(() => {
     if (token) {
-      fetch(`${URI_API}/accounts`, {
-        headers: {
-          Authorization: `Basic ${token}`
-        }
-      })
-        .then(data => data.json())
-        .then(resp => console.log('resp1 >>', resp));
+      dispatch(accountRequestAsync());
 
-      fetch(`${URI_API}/currencies`, {
-        headers: {
-          Authorization: `Basic ${token}`
-        }
-      })
-        .then(data => data.json())
-        .then(resp => console.log('resp2 >>', resp));
+      // fetch(`${URI_API}/currencies`, {
+      //   headers: {
+      //     Authorization: `Basic ${token}`
+      //   }
+      // })
+      //   .then(data => data.json())
+      //   .then(resp => console.log('resp2 >>', resp));
+      navigate('/accounts');
     }
   }, [token]);
 
@@ -86,6 +89,7 @@ export const Main = () => {
             title="только латинские буквы (не менее 6), без пробелов"
             required
             pattern="[A-Za-z]{6,}"
+            value='developer'
           />
           <label className={style.label} htmlFor="password">Пароль
           </label >
@@ -100,6 +104,7 @@ export const Main = () => {
               required
               pattern="[A-Za-z]{6,}"
               onChange={handleChange}
+              value='methed'
             />
             <button
               className={style.btnEye}
@@ -109,11 +114,8 @@ export const Main = () => {
             </button>
           </div>
 
-          <button
-            className={style.button}
-            type="submit"
-          >Войти
-          </button>
+          <Button text='Войти' type='submit' / >
+
         </form>
       </div>
     </main>

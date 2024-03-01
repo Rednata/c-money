@@ -6,10 +6,12 @@ import style from './Footer.module.scss';
 export const Footer = () => (
   <>
     <footer className={style.footer}>
-      {/* <Container addClass='footerContainer'> */}
-      <LogoSvg />
-      <p>© C-Money, 2022</p>
-      {/* </Container> */}
+      <Container>
+        <div className={style.footerWrap}>
+          <LogoSvg />
+          <p>© C-Money, 2022</p>
+        </div>
+      </Container>
     </footer>
   </>
 );

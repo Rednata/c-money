@@ -1,0 +1,36 @@
+.textSuccess {
+  font-size: 40px;
+  text-align: center;
+  margin-top: 0;
+  flex-grow: 1;
+  animation: slowRemoveOpacity 1.8s;
+}
+
+@keyframes slowRemoveOpacity {
+  0% {
+    opacity: 0;
+  }
+  // 50% {
+  //   opacity: 1;
+  // }
+  100% {
+    opacity: 1;
+  }
+}
+.wrapTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-family: 'Comfortaa', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+.titleAccounts {
+  font-family: 'Comfortaa', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+}
