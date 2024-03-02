@@ -1,12 +1,20 @@
 /* eslint-disable no-unused-vars */
+import { formatDate } from '../../utils/formatDate';
 import style from './Account.module.scss';
+
+interface ITransaction {
+  amount: string;
+  date: Date;
+  from: string;
+  to: string;
+}
 
 type Props = {
   data: {
     account: string;
     date: Date;
     balance: number;
-    transactions: [];
+    transactions: ITransaction[];
   }
 }
 
@@ -15,8 +23,10 @@ export const Account = ({ data }: Props) => {
     account,
     date,
     balance,
-    transactions
+    transactions,
   } = data;
+
+  const lastDate = transactions[0].date;
 
   return (
     <li className={style.account}>
@@ -28,11 +38,11 @@ export const Account = ({ data }: Props) => {
       <div className={style.wrapDates}>
         <div className="">
           <p>открыт</p>
-          <p>date Open</p>
+          <p>{formatDate(date)}</p>
         </div>
         <div className="">
           <p>последняя операция</p>
-          <p>date Last</p>
+          <p>{formatDate(lastDate)}</p>
         </div>
       </div>
     </li>

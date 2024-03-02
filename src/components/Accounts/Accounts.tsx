@@ -30,38 +30,41 @@ export const Accounts = () => {
         (<p className={style.textSuccess}>Вы успешно авторизовались</p>
         ) : (
           <Container>
-            <div className={style.wrapTitle}>
-              <p className={style.title}>Здравствуйте, Александр!</p>
-              <Button
-                cn='btnAccounts'
-                text='Открыть новый счет'
-                type='button' />
-            </div>
-            <div className={style.wrapTitleAccounts}>
-              <h2 className={style.titleAccounts}>Мои счета</h2>
-              <div className={style.wrapSort}>
-                <p className={style.titleSort}>Сортировка:</p>
-                <select className={style.select} name="" id="">
-                  <option className={style.option} value="">По дате</option>
-                  <option className={style.option} value="">По балансу</option>
-                  <option className={style.option} value="">
-                    По номеру счета
-                  </option>
-                  <option className={style.option} value="">
-                    По транзакции
-                  </option>
-                </select>
+            <div className={style.wrapAccounts}>
+              <div className={style.wrapTitle}>
+                <p className={style.title}>Здравствуйте, Александр!</p>
+                <Button
+                  cn='btnAccounts'
+                  text='Открыть новый счет'
+                  type='button' />
               </div>
-            </div>
+              <div className={style.wrapTitleAccounts}>
+                <h2 className={style.titleAccounts}>Мои счета</h2>
+                <div className={style.wrapSort}>
+                  <p className={style.titleSort}>Сортировка:</p>
+                  <select className={style.select} name="" id="">
+                    <option className={style.option} value="">По дате</option>
+                    <option
+                      className={style.option} value="">По балансу</option>
+                    <option className={style.option} value="">
+                      По номеру счета
+                    </option>
+                    <option className={style.option} value="">
+                      По транзакции
+                    </option>
+                  </select>
+                </div>
+              </div>
 
-            <ul className={style.listAccounts}>
-              {listAccounts.map((item: any) => (
-                <Account
-                  key={Math.random().toString(16).slice(2, 8)} data={item}
-                />
-              )
-              )}
-            </ul>
+              <ul className={style.listAccounts}>
+                {listAccounts.map((item: any) => (
+                  <Account
+                    key={Math.random().toString(16).slice(2, 8)} data={item}
+                  />
+                )
+                )}
+              </ul>
+            </div>
 
           </Container>
       )}
