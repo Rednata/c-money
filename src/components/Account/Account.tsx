@@ -26,7 +26,7 @@ export const Account = ({ data }: Props) => {
     transactions,
   } = data;
 
-  const lastDate = transactions[0].date;
+  // const lastDate = transactions[0].date
 
   return (
     <li className={style.account}>
@@ -34,7 +34,6 @@ export const Account = ({ data }: Props) => {
       <p className={style.balance}>{
         (new Intl.NumberFormat('ru-RU').format(balance))
       } &#8381;</p>
-      {/* <p className={style.balance}>{balance}</p> */}
       <div className={style.wrapDates}>
         <div className="">
           <p>открыт</p>
@@ -42,7 +41,7 @@ export const Account = ({ data }: Props) => {
         </div>
         <div className="">
           <p>последняя операция</p>
-          <p>{formatDate(lastDate)}</p>
+          <p>Нет данных</p>
         </div>
       </div>
     </li>

@@ -4,14 +4,20 @@ import { Container } from '../Container/Container';
 import style from './Accounts.module.scss';
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from 'react';
-import { useAppSelector } from '../../hooks/hooksStore';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { Account } from '../Account/Account';
+import { accountAddAsync } from '../../store/accountsStore/accountAsyncAction';
 
 export const Accounts = () => {
   const [isVisible, setIsvisible] = useState(true);
 
   const listAccounts = useAppSelector(state => state.accounts.accounts);
-  console.log('listAccounts: ', listAccounts);
+
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(accountAddAsync());
+  };
 
   // Плавное исчезновение надписи об авторизации
   useEffect(() => {
@@ -36,7 +42,9 @@ export const Accounts = () => {
                 <Button
                   cn='btnAccounts'
                   text='Открыть новый счет'
-                  type='button' />
+                  type='button'
+                  func={handleClick}
+                />
               </div>
               <div className={style.wrapTitleAccounts}>
                 <h2 className={style.titleAccounts}>Мои счета</h2>
