@@ -1,16 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { Button } from '../Button/Button';
 import { Container } from '../Container/Container';
-import { ListAccounts } from '../ListAccounts/ListAccounts';
 import style from './Accounts.module.scss';
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from 'react';
-
-// type Props = {}
+import { useAppSelector } from '../../hooks/hooksStore';
+import { Account } from '../Account/Account';
 
 export const Accounts = () => {
   const [isVisible, setIsvisible] = useState(true);
 
+  const listAccounts = useAppSelector(state => state.accounts.accounts);
+  console.log('listAccounts: ', listAccounts);
+
+  // Плавное исчезновение надписи об авторизации
   useEffect(() => {
     const id = setTimeout(() => {
       setIsvisible(false);
@@ -34,8 +37,32 @@ export const Accounts = () => {
                 text='Открыть новый счет'
                 type='button' />
             </div>
-            <h2 className={style.titleAccounts}>Мои счета</h2>
-            <ListAccounts />
+            <div className={style.wrapTitleAccounts}>
+              <h2 className={style.titleAccounts}>Мои счета</h2>
+              <div className={style.wrapSort}>
+                <p className={style.titleSort}>Сортировка:</p>
+                <select className={style.select} name="" id="">
+                  <option className={style.option} value="">По дате</option>
+                  <option className={style.option} value="">По балансу</option>
+                  <option className={style.option} value="">
+                    По номеру счета
+                  </option>
+                  <option className={style.option} value="">
+                    По транзакции
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <ul className={style.listAccounts}>
+              {listAccounts.map((item: any) => (
+                <Account
+                  key={Math.random().toString(16).slice(2, 8)} data={item}
+                />
+              )
+              )}
+            </ul>
+
           </Container>
       )}
     </>

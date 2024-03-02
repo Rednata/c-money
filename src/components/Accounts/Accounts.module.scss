@@ -29,8 +29,41 @@
   font-size: 40px;
 }
 
+.wrapTitleAccounts {
+  display: flex;
+  justify-content: space-between;
+}
+
 .titleAccounts {
   font-family: 'Comfortaa', Arial, sans-serif;
   font-weight: 700;
   font-size: 26px;
+  margin-bottom: 15px;
+}
+
+.wrapSort {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.titleSort {
+  color: var(--colorText);
+}
+
+.select {
+  font-weight: 700;
+  color: var(--text);
+  background-color: transparent;
+  border: none;
+}
+
+.option {
+  
+}
+
+.listAccounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }

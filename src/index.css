@@ -75,3 +75,12 @@ button {
   position: fixed;
   transform: scale(0);
 }
+
+p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+}

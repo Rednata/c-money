@@ -1,0 +1,22 @@
+.account {
+  color: var(--colorText);
+  border: 2px solid var(--borderColor);
+  border-radius: 10px;
+  max-width: 380px;
+  padding: 16px 20px;
+}
+
+.numAccount {
+  margin-bottom: 14px;
+}
+
+.balance {
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.wrapDates {
+  display: flex;
+  justify-content: space-between;
+}
