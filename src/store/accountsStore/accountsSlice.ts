@@ -41,8 +41,12 @@ export const accountsSlice = createSlice({
       console.log('action: ', action);
       state.isLoading = false;
     },
+    sortAccounts: (state, action) => {
+      state.accounts = action.payload;
+    }
   }
-});
+}
+);
 
 export default accountsSlice.reducer;
 

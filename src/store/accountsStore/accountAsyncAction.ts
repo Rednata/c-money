@@ -40,4 +40,3 @@ export const accountAddAsync = () => (dispatch: any, getState: any) => {
     });
 };
 
-

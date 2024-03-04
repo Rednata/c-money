@@ -7,20 +7,23 @@ import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { Account } from '../Account/Account';
 import { accountAddAsync } from '../../store/accountsStore/accountAsyncAction';
+import { accountsSlice } from '../../store/accountsStore/accountsSlice';
+import { funcSort } from '../../utils/sort';
 
 export const Accounts = () => {
   const [isVisible, setIsvisible] = useState(true);
   const listAccounts = useAppSelector(state => state.accounts.accounts);
+  const isLoading = useAppSelector(state => state.accounts.isLoading);
   const dispatch = useAppDispatch();
 
   // Логика для отображения сорта
-  const [currentSort, setCurrentSort] = useState('По дате');
+  const [valueSort, setValueSort] = useState('По дате');
   const [isActivebtnSort, setisActivebtnSort] = useState(false);
   const commonSortList = [
     'По дате', 'По балансу', 'По карте', 'По дате транзакции'
   ];
   const [sortList, setSortList] = useState(
-    commonSortList.filter(item => item !== currentSort));
+    commonSortList.filter(item => item !== valueSort));
 
   const sortHandleClick = () => {
     setisActivebtnSort(!isActivebtnSort);
@@ -28,14 +31,17 @@ export const Accounts = () => {
 
   const handleChoiceSort = (e: React.MouseEvent<HTMLLIElement>) => {
     if (e.currentTarget.textContent) {
-      setCurrentSort(e.currentTarget.textContent);
+      setValueSort(e.currentTarget.textContent);
       setisActivebtnSort(!isActivebtnSort);
     }
   };
 
   useEffect(() => {
-    setSortList(commonSortList.filter(item => item !== currentSort));
-  }, [currentSort]);
+    setSortList(commonSortList.filter(item => item !== valueSort));
+    if (isLoading) return;
+    const newSortList = funcSort(valueSort, listAccounts);
+    dispatch(accountsSlice.actions.sortAccounts(newSortList));
+  }, [valueSort]);
 
   // Добавление нового счета
   const handleClick = () => {
@@ -44,6 +50,10 @@ export const Accounts = () => {
 
   // Плавное исчезновение надписи об авторизации
   useEffect(() => {
+    if (!isLoading) {
+      const newSortList = funcSort(valueSort, listAccounts);
+      dispatch(accountsSlice.actions.sortAccounts(newSortList));
+    }
     const id = setTimeout(() => {
       setIsvisible(false);
     }, 1500);
@@ -77,7 +87,7 @@ export const Accounts = () => {
                     <button className={isActivebtnSort ?
                       style.activeBtnSort : style.btnSort}
                     onClick={sortHandleClick}>
-                      {currentSort} &#9660;
+                      {valueSort} &#9660;
                     </button>
                     {isActivebtnSort && (
                       <ul className={style.sortList} >
@@ -87,15 +97,6 @@ export const Accounts = () => {
                             key={Math.random().toString(16).slice(2, 8)}
                           >{item}</li>
                         ))}
-                        {/* <li className={style.sortItem}
-                          onClick={handleChoiceSort}
-                        >По балансу</li>
-                        <li className={style.sortItem}
-                          onClick={handleChoiceSort}
-                        >По номеру</li>
-                        <li className={style.sortItem}
-                          onClick={handleChoiceSort}
-                        >По дате транзакции</li> */}
                       </ul>
                     )}
                   </div>

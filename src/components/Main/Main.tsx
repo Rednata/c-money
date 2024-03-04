@@ -5,7 +5,6 @@ import { ReactComponent as CloseEyeIcon } from './closeEye.svg';
 import { ReactComponent as OpenEyeIcon } from './openEye.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { tokenRequestAsync } from '../../store/tokenStore/tokenAsyncAction';
-import { URI_API } from '../../const/const';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import {
@@ -55,17 +54,10 @@ export const Main = () => {
   useEffect(() => {
     if (token) {
       dispatch(accountRequestAsync());
-
-      // fetch(`${URI_API}/currencies`, {
-      //   headers: {
-      //     Authorization: `Basic ${token}`
-      //   }
-      // })
-      //   .then(data => data.json())
-      //   .then(resp => console.log('resp2 >>', resp));
       navigate('/accounts');
     }
   }, [token]);
+
 
   return (
     <main className={style.main}>
