@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { accountsSlice } from './accountsSlice';
 import { URI_API } from '../../const/const';
+import { tokenSlice } from '../tokenStore/tokenSlice';
 
 export const accountRequestAsync = () => (dispatch: any, getState: any) => {
   const token = getState().token.token;
@@ -15,6 +16,7 @@ export const accountRequestAsync = () => (dispatch: any, getState: any) => {
       if (data.error) {
         dispatch(accountsSlice.actions.accountsRequestError(data.error));
       } else {
+        dispatch(tokenSlice.actions.updateToken(token));
         dispatch(accountsSlice.actions.accountsRequestSuccess(data.payload));
       }
     });

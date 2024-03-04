@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import tokenReducer from './tokenStore/tokenSlice';
 import accountsSlice from './accountsStore/accountsSlice';
-// import { sortAccountMiddleware } from './accountsStore/accountAsyncAction';
+import { tokenMiddleware } from './tokenStore/tokenAsyncAction';
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -10,8 +10,8 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  // middleware: getDefaultMiddleware =>
-  //   getDefaultMiddleware().concat(sortAccountMiddleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(tokenMiddleware),
 }
 );
 

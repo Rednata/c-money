@@ -30,6 +30,9 @@ export const tokenSlice = createSlice({
     tokenRequestError: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    updateToken: (state, action) => {
+      state.token = action.payload.token;
     }
   }
 });
