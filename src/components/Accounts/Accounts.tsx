@@ -6,15 +6,21 @@ import style from './Accounts.module.scss';
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { Account } from '../Account/Account';
-import { accountAddAsync } from '../../store/accountsStore/accountAsyncAction';
+import {
+  accountAddAsync, accountRequestAsync
+} from '../../store/accountsStore/accountAsyncAction';
 import { accountsSlice } from '../../store/accountsStore/accountsSlice';
 import { funcSort } from '../../utils/sort';
+import { tokenSlice } from '../../store/tokenStore/tokenSlice';
 
 export const Accounts = () => {
+  const token = useAppSelector(state => state.token.token) ||
+  localStorage.getItem('token');
+  const dispatch = useAppDispatch();
+
   const [isVisible, setIsvisible] = useState(true);
   const listAccounts = useAppSelector(state => state.accounts.accounts);
   const isLoading = useAppSelector(state => state.accounts.isLoading);
-  const dispatch = useAppDispatch();
 
   // Логика для отображения сорта
   const [valueSort, setValueSort] = useState('По дате');
@@ -36,13 +42,6 @@ export const Accounts = () => {
     }
   };
 
-  useEffect(() => {
-    setSortList(commonSortList.filter(item => item !== valueSort));
-    if (isLoading) return;
-    const newSortList = funcSort(valueSort, listAccounts);
-    dispatch(accountsSlice.actions.sortAccounts(newSortList));
-  }, [valueSort]);
-
   // Добавление нового счета
   const handleClick = () => {
     dispatch(accountAddAsync());
@@ -50,10 +49,7 @@ export const Accounts = () => {
 
   // Плавное исчезновение надписи об авторизации
   useEffect(() => {
-    if (!isLoading) {
-      const newSortList = funcSort(valueSort, listAccounts);
-      dispatch(accountsSlice.actions.sortAccounts(newSortList));
-    }
+    console.log('UseEffect 22222');
     const id = setTimeout(() => {
       setIsvisible(false);
     }, 1500);
@@ -61,6 +57,28 @@ export const Accounts = () => {
       clearTimeout(id);
     };
   }, []);
+
+  useEffect(() => {
+    console.log('UseEffect 3333333');
+    dispatch(tokenSlice.actions.updateToken(token));
+    dispatch(accountRequestAsync());
+    // if (!isLoading || listAccounts) {
+    //   const newSortList = funcSort(valueSort, listAccounts);
+    //   dispatch(accountsSlice.actions.sortAccounts(newSortList));
+    // }
+  }, []);
+
+  useEffect(() => {
+    console.log('UseEffect 1111');
+    setSortList(commonSortList.filter(item => item !== valueSort));
+    console.log('1');
+    console.log('isLoading: ', isLoading);
+    console.log('listAccounts.length: ', listAccounts.length);
+    if (isLoading || !listAccounts.length) return;
+    console.log('2');
+    const newSortList = funcSort(valueSort, listAccounts);
+    dispatch(accountsSlice.actions.sortAccounts(newSortList));
+  }, [valueSort]);
 
 
   return (

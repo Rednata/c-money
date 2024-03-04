@@ -5,13 +5,13 @@ import { tokenSlice } from './tokenSlice';
 
 export const tokenMiddleware = (store: any) => (next: any) => (action: any) => {
   if (action.type === 'token/updateToken') {
-    localStorage.setItem('token', action.payload.token);
+    localStorage.setItem('token', action.payload);
   }
+  next(action);
 };
 
 export const tokenRequestAsync = (data: { login: string, password: string }) =>
   (dispatch: any, getState: any) => {
-    console.log(getState());
     dispatch(tokenSlice.actions.tokenRequest());
     axios.post('http://localhost:3000/login', {
       login: data.login,

@@ -22,7 +22,6 @@ export const tokenSlice = createSlice({
       state.error = '';
     },
     tokenRequestSuccess: (state, action) => {
-      console.log('action: ', action);
       state.isLoading = false;
       state.error = '';
       state.token = action.payload.token;
@@ -32,7 +31,7 @@ export const tokenSlice = createSlice({
       state.error = action.payload;
     },
     updateToken: (state, action) => {
-      state.token = action.payload.token;
+      state.token = action.payload;
     }
   }
 });

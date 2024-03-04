@@ -69,6 +69,7 @@ body {
 button {
   padding: 0;
   cursor: pointer;
+  color: inherit;
 }
 
 .visually-hidden {
@@ -83,4 +84,8 @@ p, ul {
 
 ul {
   list-style-type: none;
+}
+
+a {
+  cursor: pointer;
 }

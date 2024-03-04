@@ -53,7 +53,7 @@ export const Main = () => {
   // Получаем счета
   useEffect(() => {
     if (token) {
-      dispatch(accountRequestAsync());
+      // dispatch(accountRequestAsync());
       navigate('/accounts');
     }
   }, [token]);
