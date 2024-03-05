@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IAccount {
+export interface IAccount {
   account: string;
-  date: Date;
+  date?: Date;
   balance: number;
   mine: boolean;
   transactions: [];

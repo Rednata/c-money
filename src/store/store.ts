@@ -2,10 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import tokenReducer from './tokenStore/tokenSlice';
 import accountsSlice from './accountsStore/accountsSlice';
 import { tokenMiddleware } from './tokenStore/tokenAsyncAction';
+import accountInfoReducer from './accountInfoSlice/accountInfoSlice';
+
 
 const rootReducer = combineReducers({
   token: tokenReducer,
   accounts: accountsSlice,
+  info: accountInfoReducer,
 });
 
 export const store = configureStore({

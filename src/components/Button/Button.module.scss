@@ -24,3 +24,22 @@
   min-height: 49px;
   min-width: 241px;
 }
+
+.btnBack {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 49px;
+  padding: 12px 30px;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 13px;
+    background-image: url('./coolicon.svg');
+
+  }
+
+}

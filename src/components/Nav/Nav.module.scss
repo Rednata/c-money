@@ -1,0 +1,20 @@
+.list {
+  display: flex;
+  gap: 30px;
+  font-weight: 700;
+}
+
+.btn {
+  display: flex;
+  gap: 3px;
+  background-color: transparent;
+  border: none;
+  
+  &:after {
+    content: '';
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-image: url('./exit.svg');
+  }
+}

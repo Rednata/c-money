@@ -1,17 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { Button } from '../Button/Button';
 import { Container } from '../Container/Container';
+import { ItemAccount } from './ItemAccount/ItemAccount';
+
 import style from './Accounts.module.scss';
-// eslint-disable-next-line no-unused-vars
+
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
-import { Account } from '../Account/Account';
 import {
   accountAddAsync, accountRequestAsync
 } from '../../store/accountsStore/accountAsyncAction';
 import { accountsSlice } from '../../store/accountsStore/accountsSlice';
-import { funcSort } from '../../utils/sort';
 import { tokenSlice } from '../../store/tokenStore/tokenSlice';
+import { funcSort } from '../../utils/sort';
 
 export const Accounts = () => {
   const token = useAppSelector(state => state.token.token) ||
@@ -22,7 +23,7 @@ export const Accounts = () => {
   const listAccounts = useAppSelector(state => state.accounts.accounts);
   const isLoading = useAppSelector(state => state.accounts.isLoading);
 
-  // Логика для отображения сорта
+  // Логика для отображения сортировки
   const [valueSort, setValueSort] = useState('По дате');
   const [isActivebtnSort, setisActivebtnSort] = useState(false);
   const commonSortList = [
@@ -61,7 +62,8 @@ export const Accounts = () => {
   useEffect(() => {
     console.log('UseEffect 3333333');
     dispatch(tokenSlice.actions.updateToken(token));
-    dispatch(accountRequestAsync());
+
+    dispatch(accountRequestAsync('accounts'));
     // if (!isLoading || listAccounts) {
     //   const newSortList = funcSort(valueSort, listAccounts);
     //   dispatch(accountsSlice.actions.sortAccounts(newSortList));
@@ -118,28 +120,12 @@ export const Accounts = () => {
                       </ul>
                     )}
                   </div>
-
-                  {/* <select className={style.select} name="" id="">
-                    <option
-                      className={style.option} value=""
-                    >
-                      По дате открытия
-                    </option>
-                    <option
-                      className={style.option} value="">По балансу</option>
-                    <option className={style.option} value="">
-                      По номеру счета
-                    </option>
-                    <option className={style.option} value="">
-                      По дате транзакции
-                    </option>
-                  </select> */}
                 </div>
               </div>
 
               <ul className={style.listAccounts}>
                 {listAccounts.map((item: any) => (
-                  <Account
+                  <ItemAccount
                     key={Math.random().toString(16).slice(2, 8)} data={item}
                   />
                 )
