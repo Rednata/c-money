@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils/formatDate';
 import style from './ItemAccount.module.scss';
 
-interface ITransaction {
-  amount: string;
+export interface ITransaction {
+  amount: number;
   date: Date;
   from: string;
   to: string;

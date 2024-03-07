@@ -22,6 +22,10 @@ export const Chart1 = () => {
       }
     ]
   };
+
+  const options = {
+    responsive: true,
+  };
   // const options = {
   //   scales: {
   //     y: {
@@ -31,7 +35,7 @@ export const Chart1 = () => {
   // };
   return (
     <div>
-      <Line data={data} />
+      <Line data={data} options={options}/>
       {/* <Line data={data} options={options} /> */}
     </div>
   );
