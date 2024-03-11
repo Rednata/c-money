@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 import style from './Nav.module.scss';
 import { tokenSlice } from '../../store/tokenStore/tokenSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/hooksStore';
+import { useEffect, useState } from 'react';
 
 export const Nav = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [disabled, setDisabled] = useState(true);
 
   const handleClickExit = () => {
     console.log('lick');
@@ -14,11 +17,31 @@ export const Nav = () => {
     navigate('/');
   };
 
+  useEffect(() => {
+    if (location.pathname === '/accounts') {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [location.pathname]);
+
   return (
     <nav className={style.nav}>
       <ul className={style.list}>
-        <li className={style.item}>Счета
-          <a className={style.link} href=""></a>
+        <li className={style.item}>
+          {disabled ? (
+            <a
+              className={style.linkDisabled}
+            >Счета
+            </a>
+          ) : (
+            <Link
+              className={style.link}
+              to="/accounts"
+            >Счета
+            </Link>
+          )}
+
         </li>
         <li className={style.item}>Обмен
           <a className={style.link} href=""></a>

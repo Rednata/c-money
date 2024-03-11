@@ -23,6 +23,8 @@ import { getSum } from '../../utils/getSum';
 export const AccountInfo = () => {
   const id = useLocation().hash.slice(1);
 
+  const [value, setValue] = useState(0);
+
   const [balanceItems, setBalanceItems] = useState<number[]>([0, 0]);
   console.log('balanceItems: ', balanceItems);
   const navigate = useNavigate();
@@ -60,6 +62,16 @@ export const AccountInfo = () => {
           moment(elem.date) >= moment(currentDate).subtract(3, 'year'));
     }
     setBalanceItems(getSum(arr, id));
+  };
+
+  const handleSubmit = (e: React.FormEvent<EventTarget>) => {
+    e.preventDefault();
+  };
+
+  const handleChangeSum = (e: React.ChangeEvent<EventTarget>) => {
+    if (e.target instanceof HTMLInputElement) {
+      setValue(Number(e.target.value));
+    }
   };
 
   useEffect(() => {
@@ -106,7 +118,7 @@ export const AccountInfo = () => {
           </table>
         </div>
         <div className={style.static}>
-          <h2 className={style.titleStatic}>Статистика</h2>
+          <h2 className={style.title}>Статистика</h2>
           <div className={style.staticWrap}>
 
             <div className={style.btnWrap}>
@@ -147,6 +159,38 @@ export const AccountInfo = () => {
           <ChartLine />
         </div>
 
+      </div>
+      <div className={style.transfer}>
+        <h2 className={style.title}>Перевод</h2>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <div className={style.labelWrap}>
+            <label htmlFor='account' className={style.label} />Счет
+            <input
+              className={style.input}
+              type="text"
+              id='account'
+              required
+            />
+
+          </div>
+          <div className={style.labelWrap}>
+            <label htmlFor='sum' className={style.label} />Сумма
+            <input
+              className={style.input}
+              type="number"
+              id='sum'
+              required
+              pattern="[0123456789]"
+              min="0"
+              onChange={handleChangeSum}
+            />
+          </div>
+
+          <Button
+            cn='btnTransfer'
+            text='Перевести'
+            type="submit"/>
+        </form>
       </div>
 
     </Container>

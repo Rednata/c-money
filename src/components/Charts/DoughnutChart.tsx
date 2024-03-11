@@ -3,6 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+
 type Props = {
   balanceItems: number[];
 };
@@ -11,7 +12,26 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
   const [income, spending] = balanceItems;
   console.log('spending: ', spending);
   console.log('income: ', income);
+
+  // const optionsNoData = {
+  //   elements: {
+  //     center: {
+  //       text: 'Red is 2/3 the total numbers',
+  //       color: '#FF6384',
+  //       fontStyle: 'Arial',
+  //       sidePadding: 20,
+  //       minFontSize: 20,
+  //       lineHeight: 25,
+  //     },
+  //   },
+  // };
+
   const options = {
+    text: {
+      display: true,
+      text: '12312312312',
+      color: '#ffffff'
+    },
     radius: 100,
     cutout: '75%',
     animation: false,
