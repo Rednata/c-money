@@ -11,7 +11,6 @@ export const Nav = () => {
   const [disabled, setDisabled] = useState(true);
 
   const handleClickExit = () => {
-    console.log('lick');
     localStorage.removeItem('token');
     dispatch(tokenSlice.actions.updateToken(''));
     navigate('/');

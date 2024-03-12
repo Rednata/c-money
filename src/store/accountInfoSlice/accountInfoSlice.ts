@@ -34,6 +34,19 @@ export const accountInfoSlice = createSlice({
       console.log(action);
       state.isLoading = false;
     },
+    postTransferRequest: (state) => {
+      state.isLoading = true;
+      state.error = '';
+    },
+    postTransferRequestSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = '';
+    },
+    postTransferRequestError: (state, action) => {
+      console.log('action: ', action.payload.error);
+      state.isLoading = false;
+      state.error = action.payload.error;
+    },
   }
 });
 

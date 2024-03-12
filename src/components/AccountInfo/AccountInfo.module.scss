@@ -103,8 +103,8 @@
 .DoughnutChart {
   display: flex;
   align-items: center;
-  flex-grow: 1;
-  // border: 1px solid red;
+  // flex-grow: 1;
+  border: 1px solid red;
   // width: 300px;
   // height: 150px;
 }
@@ -113,9 +113,19 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
+  border: 1px solid red;
+  flex-grow: 1;
+}
+
+.textColor {
+}
+
+.textTransparent {
+  color: transparent;
 }
 
 .transfer {
+  position: relative;
   width: 100%;
   margin-bottom: 80px;
 }

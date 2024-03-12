@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
@@ -10,21 +11,11 @@ type Props = {
 
 export const DoughnutChart = ({ balanceItems }: Props) => {
   const [income, spending] = balanceItems;
-  console.log('spending: ', spending);
-  console.log('income: ', income);
 
-  // const optionsNoData = {
-  //   elements: {
-  //     center: {
-  //       text: 'Red is 2/3 the total numbers',
-  //       color: '#FF6384',
-  //       fontStyle: 'Arial',
-  //       sidePadding: 20,
-  //       minFontSize: 20,
-  //       lineHeight: 25,
-  //     },
-  //   },
-  // };
+  let title = '';
+  if (!income && !spending) {
+    title = 'НЕТ ДАННЫХ';
+  }
 
   const options = {
     text: {
@@ -33,7 +24,7 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
       color: '#ffffff'
     },
     radius: 100,
-    cutout: '75%',
+    cutout: '80%',
     animation: false,
     // maintainAspectRatio: false,
     // aspectRatio: 1.5,
@@ -63,20 +54,40 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
       },
       title: {
         display: true,
-        text: 'Баланс',
+        text: `${title}`,
         color: '#c6b6d7',
         position: 'top' as const,
+        font: {
+          size: 40,
+          family: 'Nunito, Arial, sans-serif'
+        }
       },
     },
   };
 
+  const data1 = {
+    labels: ['Баланс', `Доходы`, `Расходы`],
+    datasets: [
+      {
+        // label: '# of Votes',
+        data: [1],
+        backgroundColor: [
+          'transparent',
+        ],
+        borderColor: [
+          'rgba(193, 191, 196, 0.2)',
+        ],
+
+      },
+    ],
+  };
   const data = {
     labels: ['Баланс', `Доходы`, `Расходы`],
     // labels: [`Доходы ${plus}`, `Расходы ${minus}`],
     datasets: [
       {
         // label: '# of Votes',
-        data: [0, spending, income],
+        data: [0, income, spending],
         backgroundColor: [
           'transparent',
           '#4B00CA',
@@ -88,8 +99,8 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
           '#b865d6',
         ],
         borderWidth: 1,
-        borderRadius: 20,
-        spacing: 2,
+        borderRadius: 5,
+        spacing: 3,
 
       },
     ],
@@ -97,7 +108,7 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
 
   return (
     <Doughnut
-      data={data}
+      data={!income && !spending ? data1 : data}
       options={options}
       height='220px'
       // width='220px'

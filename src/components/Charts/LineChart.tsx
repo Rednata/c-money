@@ -1,58 +1,47 @@
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
+  CategoryScale, Chart, LinearScale, PointElement, LineElement
 } from 'chart.js';
+Chart.register(CategoryScale);
+Chart.register(LinearScale);
+Chart.register(PointElement);
+Chart.register(LineElement);
 import { Line } from 'react-chartjs-2';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const ChartLine = () => {
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart',
-      },
-    },
-  };
-  const labels = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July'];
+export const LineChart = () => {
+  // const nameMonth = [
+  //   'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
+  //   'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
 
   const data = {
-    labels,
+    labels: [
+      'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
+      'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
     datasets: [
       {
-        label: 'Dataset 1',
-        data: [100, 252, 400, 370, 520, 800, -200],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: [-400, 0, 152, 800, 200, 705, -50],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
+        label: 'My First Dataset',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }
+    ]
   };
-  return <Line options={options} data={data} />;
+
+  const options = {
+    responsive: true,
+  };
+  // const options = {
+  //   scales: {
+  //     y: {
+  //       beginAtZero: true
+  //     }
+  //   }
+  // };
+  return (
+    <div>
+      <Line data={data} options={options}/>
+      {/* <Line data={data} options={options} /> */}
+    </div>
+  );
 };
 

@@ -1,0 +1,24 @@
+.overlay {
+  
+  // inset: 0 0 0 0;
+  background-color: rgba(198, 182, 215, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  position: absolute;
+  inset: 0 0 0 0;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--colorText);
+  border-radius: 10px;
+}
+
+.text {
+  color: var(--darkColor);
+  font-size: 32px;
+  font-weight: 700;
+}

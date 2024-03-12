@@ -8,25 +8,31 @@ import { Container } from '../Container/Container';
 import style from './AccountInfo.module.scss';
 import { Button } from '../Button/Button';
 
-import { Chart1 } from './Chart/Chart';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
 import { countDate } from '../../utils/countDate';
 
-import { ChartLine } from '../Charts/LineChart';
+import { ChartLine } from '../Charts/LineChart1';
 import { DoughnutChart } from '../Charts/DoughnutChart';
 import moment from 'moment';
 import { ITransaction } from '../Accounts/ItemAccount/ItemAccount';
 import { getSum } from '../../utils/getSum';
-// import { ITransaction } from '../Accounts/ItemAccount/ItemAccount';
+import {
+  postTransferRequestAsync
+} from '../../store/postTransferSlice/postTransferAction';
+import { ErrorModal } from '../ErrorModal/ErrorModal';
+import { formatSum } from '../../utils/fomatSum';
+import { LineChart } from '../Charts/LineChart';
+
 
 export const AccountInfo = () => {
   const id = useLocation().hash.slice(1);
 
-  const [value, setValue] = useState(0);
+  const errorTransfer = useAppSelector(state => state.info.error);
+  const [showErrorModal, setshowErrorModal] = useState(false);
+  const [infoTransfer, setInfoTransfer] = useState({ account: '', amount: 0 });
 
   const [balanceItems, setBalanceItems] = useState<number[]>([0, 0]);
-  console.log('balanceItems: ', balanceItems);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -41,7 +47,6 @@ export const AccountInfo = () => {
   const transactionsHistory = transactionsAll.slice(-10).reverse();
   if (transactionsAll.length >= 1) {
     const dataLineChart = countDate(transactionsAll, id, balance);
-    console.log('dataLineChart: ', dataLineChart);
   }
 
   const handleClickStatic = (
@@ -66,18 +71,35 @@ export const AccountInfo = () => {
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
+    dispatch(postTransferRequestAsync(infoTransfer));
+    console.warn('errorTransfer: ', errorTransfer);
   };
 
-  const handleChangeSum = (e: React.ChangeEvent<EventTarget>) => {
+  const handleChange = (e: React.ChangeEvent<EventTarget>) => {
     if (e.target instanceof HTMLInputElement) {
-      setValue(Number(e.target.value));
+      if (e.target.id === 'account') {
+        setInfoTransfer({ ...infoTransfer, account: e.target.value });
+      } else if (e.target.id === 'amount') {
+        setInfoTransfer({ ...infoTransfer, amount: Number(e.target.value) });
+      }
     }
   };
+
+  useEffect(() => {
+    if (errorTransfer) {
+      setshowErrorModal(true);
+      setTimeout(() => {
+        setshowErrorModal(false);
+      }, 1500);
+    }
+  }, [errorTransfer]);
 
   useEffect(() => {
     dispatch(accountRequestAsync(`account/${id}`));
   }, []);
 
+  const classNameAmount = (!balanceItems[0] && !balanceItems[1] ?
+    'textTransparent' : 'textColor');
   return (
     <Container>
       <div className={style.wrapTitle}>
@@ -86,7 +108,7 @@ export const AccountInfo = () => {
       </div>
       <div className={style.wrap}>
         <div className={style.chart}>
-          <Chart1 />
+          <LineChart />
         </div>
         <div className={style.history}>
           <table cellSpacing={24} className={style.table}>
@@ -140,18 +162,16 @@ export const AccountInfo = () => {
             <div className={style.DoughnutChart}>
               <DoughnutChart balanceItems={balanceItems}/>
               <div className={style.wrapValue}>
-                <p>
-                  {(new Intl.NumberFormat('ru-RU')
-                    .format(balanceItems[0] + balanceItems[1]))
+                <p className={style[classNameAmount]}>
+                  {formatSum(balanceItems[0] + balanceItems[1])
                   } &#8381;</p>
-                <p>
-                  {(new Intl.NumberFormat('ru-RU')
-                    .format(balanceItems[0]))
+                <p className={style[classNameAmount]}>
+                  {}
+                  {formatSum(balanceItems[0])
                   } &#8381;
                 </p>
-                <p>
-                  {(new Intl.NumberFormat('ru-RU')
-                    .format(balanceItems[1]))
+                <p className={style[classNameAmount]}>
+                  {formatSum(balanceItems[1])
                   } &#8381;</p>
               </div>
             </div>
@@ -162,6 +182,7 @@ export const AccountInfo = () => {
       </div>
       <div className={style.transfer}>
         <h2 className={style.title}>Перевод</h2>
+        {showErrorModal && <ErrorModal text={errorTransfer} />}
         <form className={style.form} onSubmit={handleSubmit}>
           <div className={style.labelWrap}>
             <label htmlFor='account' className={style.label} />Счет
@@ -170,19 +191,19 @@ export const AccountInfo = () => {
               type="text"
               id='account'
               required
+              onChange={handleChange}
             />
-
           </div>
           <div className={style.labelWrap}>
-            <label htmlFor='sum' className={style.label} />Сумма
+            <label htmlFor='amount' className={style.label} />Сумма
             <input
               className={style.input}
               type="number"
-              id='sum'
+              id='amount'
               required
               pattern="[0123456789]"
-              min="0"
-              onChange={handleChangeSum}
+              min="1"
+              onChange={handleChange}
             />
           </div>
 
@@ -191,6 +212,7 @@ export const AccountInfo = () => {
             text='Перевести'
             type="submit"/>
         </form>
+
       </div>
 
     </Container>

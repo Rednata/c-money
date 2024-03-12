@@ -1,46 +1,43 @@
 /* eslint-disable no-unused-vars */
 import moment from 'moment';
-// moment().format();
 
 export const countDate = (arr: any, id: string, balance: number) => {
-  // const d = useAppSelector(state => state.info);
-  // console.log('arr: ', arr);
-  const dateEnd = arr[arr.length - 1].date;
-  console.log('dateEnd: ', dateEnd);
-  const dateStart = moment(new Date(dateEnd).setDate(1)).subtract(5, 'months');
-  console.log('dateStart: ', dateStart);
+  console.log('arr: ', arr);
+  const startDate = moment(new Date().setDate(1))
+    .subtract(5, 'months').format();
+  const sliceArray = arr.filter((elem: {date: Date}) =>
+    moment(elem.date).format() >= startDate);
+  console.log('sliceArray: ', sliceArray);
 
-  const newArr = arr.filter((item: {date: Date}) =>
-    moment(item.date) >= dateStart);
-  console.log('newArr: ', newArr);
+  let startMonth = moment(sliceArray[0].date).month();
+  // let currentMonth: number;
+  // if (new Date(arr[0].date) > new Date(startDate)) {
+  //   currentMonth = moment(new Date(arr[0].date)).month();
+  // } else {
+  //   currentMonth = startMonth;
+  // }
 
-  let month = moment(dateStart).month();
-  let arrTemp: {date: Date, from: string, amount: number}[] = [];
-  const arrMonths: {date: Date, from: string, amount: number}[][] = [];
+  console.log('startMonth: ', startMonth);
 
-  newArr.forEach((elem: {date: Date, from: string, amount: number}) => {
-    if (moment(elem.date).month() === month) {
-      arrTemp.push(elem);
-      if (elem === newArr[newArr.length - 1]) {
-        arrMonths.push(arrTemp);
+  let sum = 0;
+  const sumMonth = sliceArray.reduce(
+    (acc: any[], elem: {date: Date, from: string, amount: number}) => {
+      if (moment(elem.date).month() === startMonth) {
+        sum = elem.from === id ? sum - elem.amount : sum + elem.amount;
+      } else {
+        acc.push({ sum, month: startMonth - 1 });
+        startMonth = moment(elem.date).month();
+        sum = elem.amount;
       }
-    } else {
-      month = moment(elem.date).month();
-      arrMonths.push(arrTemp);
-      arrTemp = [];
-    }
-  });
-
-  const arrSumMonths = arrMonths.map(item => {
-    const sum = item.reduce(
-      (acc: number, elem: {from: string, amount: number}) => {
-        console.log();
-        return elem.from === id ? acc - elem.amount : acc + elem.amount;
-      }, 0);
-    return sum + balance;
-  });
-  console.log('arrSumMonths: ', arrSumMonths);
-  return arrSumMonths;
+      if (elem === sliceArray[sliceArray.length - 1]) {
+        acc.push({ sum, month: moment(elem.date).month() - 1 });
+      }
+      return acc;
+    }, [])
+    .map((elem: {sum: number}) =>
+      ({ ...elem, sum: Number((balance - elem.sum).toFixed(2)) }));
+  sumMonth.push({ sum: balance, month: new Date().getMonth() });
+  console.log('sumMonth: ', sumMonth);
 };
 
 

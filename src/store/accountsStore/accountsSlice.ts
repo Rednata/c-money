@@ -52,7 +52,7 @@ export const accountsSlice = createSlice({
     sortAccounts: (state, action) => {
       state.accounts = action.payload;
     }
-  }
+  },
 }
 );
 
