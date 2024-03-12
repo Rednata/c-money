@@ -1,0 +1,89 @@
+.title {
+  font-family: Comfortaa, Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 70px;
+}
+
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.wrapForm {
+
+}
+
+.form {
+  padding: 17px;
+  background-color: var(--darkColor);
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.fieldset {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  border: none;
+  padding: 0;
+}
+
+fieldset {
+
+}
+
+.formTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.wrapLabel {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.label {
+  padding-left: 10px;
+  color: var(--colorText);
+}
+
+.select, .input {
+  min-height: 37px;
+  border-radius: 6px;
+  padding-left: 10px;
+}
+
+.select {
+  appearance: none;
+  background-image: url("./down.svg");
+  background-repeat: no-repeat;
+  background-position: 95%;
+}
+
+.input {
+  border: 2px solid transparent;
+}
+
+.itemCurrency {
+  display: flex;
+  
+}
+
+.itemCurrency:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.nameCurrency {
+  color: var(--colorText);
+  margin-right: 16px;
+}
+
+.amountCurrency {
+  margin-right: 16px;
+  font-weight: 700;
+  color: var(--text);
+}

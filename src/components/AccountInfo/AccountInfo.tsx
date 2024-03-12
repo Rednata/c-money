@@ -45,8 +45,10 @@ export const AccountInfo = () => {
 
   const transactionsAll = data.transactions;
   const transactionsHistory = transactionsAll.slice(-10).reverse();
+
+  let dataLineChart = [{ sum: 0, month: Number(new Date()) }];
   if (transactionsAll.length >= 1) {
-    const dataLineChart = countDate(transactionsAll, id, balance);
+    dataLineChart = countDate(transactionsAll, id, balance);
   }
 
   const handleClickStatic = (
@@ -108,7 +110,7 @@ export const AccountInfo = () => {
       </div>
       <div className={style.wrap}>
         <div className={style.chart}>
-          <LineChart />
+          <LineChart dataInput={dataLineChart} />
         </div>
         <div className={style.history}>
           <table cellSpacing={24} className={style.table}>

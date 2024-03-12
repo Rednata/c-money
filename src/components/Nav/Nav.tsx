@@ -42,8 +42,8 @@ export const Nav = () => {
           )}
 
         </li>
-        <li className={style.item}>Обмен
-          <a className={style.link} href=""></a>
+        <li className={style.item}>
+          <Link className={style.link} to="/exchange">Обмен</Link>
         </li>
         <li className={style.item}>
           <button

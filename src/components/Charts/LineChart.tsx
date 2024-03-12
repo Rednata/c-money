@@ -7,19 +7,25 @@ Chart.register(PointElement);
 Chart.register(LineElement);
 import { Line } from 'react-chartjs-2';
 
-export const LineChart = () => {
-  // const nameMonth = [
-  //   'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
-  //   'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+type Props = {
+  dataInput: {
+    sum: number;
+    month: number;
+  }[]
+};
+
+export const LineChart = ({ dataInput }: Props) => {
+  console.log('dataInput: ', dataInput);
+  const nameMonth = [
+    'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
+    'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
 
   const data = {
-    labels: [
-      'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
-      'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+    labels: dataInput.map(elem => nameMonth[elem.month]),
     datasets: [
       {
         label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: dataInput.map(elem => elem.sum),
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1

@@ -2,6 +2,7 @@ import './App.css';
 import { AccountInfo } from './components/AccountInfo/AccountInfo';
 // import { AccountInfo } from './components/AccountInfo/AccountInfo';
 import { Accounts } from './components/Accounts/Accounts';
+import { Exchange } from './components/Exchange/Exchange';
 // import { Footer } from './components/Footer/Footer';
 // import { Header } from './components/Header/Header';
 // import { HeaderAuth } from './components/Header/HeaderAuth';
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<Main />} />
           <Route path='accounts' element={<Accounts />} />
           <Route path='accounts/:acc' element={<AccountInfo />} />
+          <Route path='exchange' element={<Exchange />} />
         </Route>
 
       </Routes>
