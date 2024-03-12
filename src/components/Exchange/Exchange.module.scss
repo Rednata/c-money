@@ -64,6 +64,14 @@ fieldset {
   background-position: 95%;
 }
 
+select::-ms-expand {
+  display: none;
+}
+
+.option {
+  width: 100%;
+}
+
 .input {
   border: 2px solid transparent;
 }

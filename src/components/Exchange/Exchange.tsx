@@ -1,8 +1,27 @@
+import { useEffect } from 'react';
 import { Container } from '../Container/Container';
 import style from './Exchange.module.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
+import {
+  getCurrencyRequestAsync
+} from '../../store/currencyStore/currencyAction';
+import { formatSum } from '../../utils/fomatSum';
+// import { Loader } from '../Loader/Loader';
 
 export const Exchange = () => {
-  console.log();
+  const dispatch = useAppDispatch();
+  const allCurrency = useAppSelector(state => state.currency.allCurrency);
+  const userCurrency = Object
+    .entries(useAppSelector(state => state.currency.userCurrency))
+    .map((elem: any) => {
+      const { amount, code } = elem[1];
+      return ([elem[0], amount, code]);
+    });
+
+  useEffect(() => {
+    dispatch(getCurrencyRequestAsync('all-currencies'));
+    dispatch(getCurrencyRequestAsync('currencies'));
+  }, []);
 
   return (
     <Container>
@@ -20,17 +39,31 @@ export const Exchange = () => {
               <div className={style.wrapLabel}>
                 <label className={style.label}>Откуда</label>
                 <select name="" id="" className={style.select}>
-                  <option className={style.option} value="">1</option>
-                  <option className={style.option} value="">2</option>
-                  <option className={style.option} value="">3</option>
+                  {
+                    userCurrency.map(elem => (
+                      <option
+                        className={style.option}
+                        value=""
+                        key={Math.random().toString(16).slice(2, 10)}
+                      >{elem[0]}
+                      </option>)
+                    )
+                  }
                 </select>
               </div>
               <div className={style.wrapLabel}>
                 <label className={style.label}>Куда</label>
                 <select name="" id="" className={style.select}>
-                  <option value="">1</option>
-                  <option value="">2</option>
-                  <option value="">3</option>
+                  {
+                    allCurrency.map(elem => (
+                      <option
+                        className={style.option}
+                        value=""
+                        key={Math.random().toString(16).slice(2, 10)}
+                      >{elem}
+                      </option>)
+                    )
+                  }
                 </select>
               </div>
               <div className={style.wrapLabel}>
@@ -46,21 +79,20 @@ export const Exchange = () => {
           </form>
           <div className={style.myCurrency}>
             <ul className={style.titleCurrency}>
-              <li className={style.itemCurrency}>
-                <p className={style.nameCurrency}>BTC
-                </p>
-                <span className={style.amountCurrency}>2405</span>
-              </li>
-              <li className={style.itemCurrency}>
-                <p className={style.nameCurrency}>ETH
-                </p>
-                <span className={style.amountCurrency}>3620</span>
-              </li>
-              <li className={style.itemCurrency}>
-                <p className={style.nameCurrency}>ETH
-                </p>
-                <span className={style.amountCurrency}>3620 ₽</span>
-              </li>
+              {
+                userCurrency.map(elem => (
+                  <li
+                    key={Math.random().toString(16).slice(2, 10)}
+                    className={style.itemCurrency}>
+                    <p className={style.nameCurrency}>{elem[0]}
+                    </p>
+                    <span className={style.amountCurrency}>
+                      {`${formatSum(elem[1])} ${elem[2]}`}
+                    </span>
+                  </li>
+                ))
+              }
+
             </ul>
           </div>
         </div>
