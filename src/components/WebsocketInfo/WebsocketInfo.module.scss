@@ -1,0 +1,57 @@
+.websocket {
+  background-color: var(--darkColor);
+  border-radius: 10px;
+  padding: 15px 20px 30px 15px;
+  align-self: flex-start;
+  height: 380px;
+}
+
+.websocketTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.websocketList {
+  font-weight: 700;
+}
+
+.websocketItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.websocketItem:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.hr {
+  height: 1px;
+  flex-grow: 1;
+  background-color: var(--backgroundColor);
+}
+
+.temp {
+  align-self: center;
+}
+.up {
+  display: block;
+  height: 10px;
+  width: 10px;
+  background-image: url("./up.svg");
+  background-repeat: no-repeat;
+  // background-position: center;
+  margin-left: 2px;
+}
+
+.down {
+  display: block;
+  height: 10px;
+  width: 10px;
+  background-image: url("./down.svg");
+  background-repeat: no-repeat;
+  // background-position: center;
+  margin-left: 2px;
+}
