@@ -1,40 +1,36 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
-import style from './Main.module.scss';
+import style from './Auth.module.scss';
 import { ReactComponent as CloseEyeIcon } from './closeEye.svg';
 import { ReactComponent as OpenEyeIcon } from './openEye.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { tokenRequestAsync } from '../../store/tokenStore/tokenAsyncAction';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
-import {
-  accountRequestAsync } from '../../store/accountsStore/accountAsyncAction';
 
-export const Main = () => {
-  const [value, setValue] = useState({
-    login: 'developer', password: 'methed'
+export const Auth = () => {
+  const [valueInput, setValueInput] = useState({
+    login: '', password: ''
   });
-  const [inputType, setInputType] = useState(true);
-  const token = useAppSelector(state => state.token.token);
-
-  const navigate = useNavigate();
-
+  const [hiddenPassword, setHiddenPassword] = useState(true);
   const [auth, setAuth] = useState({ login: '', password: '' });
 
-  const loginInput = useRef<HTMLInputElement>(null);
+  const token = useAppSelector(state => state.token.token);
+  const navigate = useNavigate();
+  const loginInput = useRef<HTMLInputElement>(null); //  для фокуса
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    setAuth(value);
+    setAuth(valueInput);
   };
 
   const handleChange = (e: React.ChangeEvent<EventTarget>) => {
     if (e.target instanceof HTMLInputElement) {
       if (e.target.name === 'login') {
-        setValue({ ...value, login: e.target.value });
+        setValueInput({ ...valueInput, login: e.target.value });
       } else if (e.target.name === 'password') {
-        setValue({ ...value, password: e.target.value });
+        setValueInput({ ...valueInput, password: e.target.value });
       }
     }
   };
@@ -50,7 +46,7 @@ export const Main = () => {
     }
   }, [auth]);
 
-  // Получаем счета
+  // Загружаем страницу со счетами
   useEffect(() => {
     if (token) {
       // dispatch(accountRequestAsync());
@@ -58,10 +54,9 @@ export const Main = () => {
     }
   }, [token]);
 
-
   return (
     <main className={style.main}>
-      <div className={style.wrap}>
+      <div className={style.wrapAuth}>
         <h1 className='visually-hidden'>Форма для авторизации</h1>
         <form className={style.form} onSubmit={handleSubmit}>
           <h2 className={style.title}>Вход в аккаунт</h2>
@@ -81,28 +76,30 @@ export const Main = () => {
             title="только латинские буквы (не менее 6), без пробелов"
             required
             pattern="[A-Za-z]{6,}"
-            value='developer'
+            value={valueInput.login}
           />
           <label className={style.label} htmlFor="password">Пароль
           </label >
           <div className={style.inputWrap}>
-            <input
-              className={style.input}
-              type={inputType ? 'password' : 'text'}
-              id="password"
-              name="password"
-              autoComplete="off"
-              title="только латинские буквы (не менее 6), без пробелов"
-              required
-              pattern="[A-Za-z]{6,}"
-              onChange={handleChange}
-              value='methed'
-            />
+            <label className={style.inputLabel}>
+              <input
+                className={style.input}
+                type={hiddenPassword ? 'password' : 'text'}
+                id="password"
+                name="password"
+                autoComplete="off"
+                title="только латинские буквы (не менее 6), без пробелов"
+                required
+                pattern="[A-Za-z]{6,}"
+                onChange={handleChange}
+                value={valueInput.password}
+              />
+            </label>
             <button
               className={style.btnEye}
-              onClick={() => setInputType(!inputType)}
+              onClick={() => setHiddenPassword(!hiddenPassword)}
             >
-              {inputType ? <CloseEyeIcon /> : <OpenEyeIcon />}
+              {hiddenPassword ? <CloseEyeIcon /> : <OpenEyeIcon />}
             </button>
           </div>
 

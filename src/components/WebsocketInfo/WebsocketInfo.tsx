@@ -11,21 +11,21 @@ type currencyInfo = {
 }
 
 export const WebsocketInfo = () => {
-  // const socket = new WebSocket('ws://localhost:3000/currency-feed');
+  const socket = new WebSocket('ws://localhost:3000/currency-feed');
 
   const [currency, setCurrency] = useState<currencyInfo[]>([]);
 
-  // useEffect(() => {
-  //   socket.addEventListener('message', e => {
-  //     setCurrency((prevCarrency) => {
-  //       if (prevCarrency.length > 7) {
-  //         return [...prevCarrency.slice(1), JSON.parse(e.data)];
-  //       } else {
-  //         return [...prevCarrency, JSON.parse(e.data)];
-  //       }
-  //     });
-  //   });
-  // }, []);
+  useEffect(() => {
+    socket.addEventListener('message', e => {
+      setCurrency((prevCarrency) => {
+        if (prevCarrency.length > 7) {
+          return [...prevCarrency.slice(1), JSON.parse(e.data)];
+        } else {
+          return [...prevCarrency, JSON.parse(e.data)];
+        }
+      });
+    });
+  }, []);
 
   return (
     <div className={style.websocket}>

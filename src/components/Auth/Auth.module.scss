@@ -1,9 +1,8 @@
 .main {
-  // flex-grow: 1;
   margin-bottom: 100px;
 }
 
-.wrap {
+.wrapAuth {
   padding: 50px 130px;  
   width: 580px;
   background-color: var(--darkColor);
@@ -33,6 +32,10 @@
   display: flex;
   // width: 100%;
 }
+
+ .inputLabel {
+  width: 100%;
+ }
 
 .input {  
   width: 100%;

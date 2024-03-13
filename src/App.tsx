@@ -7,7 +7,7 @@ import { Exchange } from './components/Exchange/Exchange';
 // import { Header } from './components/Header/Header';
 // import { HeaderAuth } from './components/Header/HeaderAuth';
 import { Layout } from './components/Layout/Layout';
-import { Main } from './components/Main/Main';
+import { Auth } from './components/Auth/Auth';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route index element={<Main />} />
+          <Route index element={<Auth />} />
           <Route path='accounts' element={<Accounts />} />
           <Route path='accounts/:acc' element={<AccountInfo />} />
           <Route path='exchange' element={<Exchange />} />

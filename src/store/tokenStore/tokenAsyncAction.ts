@@ -11,8 +11,13 @@ export const tokenMiddleware = (store: any) => (next: any) => (action: any) => {
   next(action);
 };
 
-export const tokenRequestAsync = (data: { login: string, password: string }) =>
-  (dispatch: any, getState: any) => {
+interface IAuth {
+  login: string;
+  password: string;
+}
+
+export const tokenRequestAsync = (data: IAuth) =>
+  (dispatch: any) => {
     dispatch(tokenSlice.actions.tokenRequest());
     axios.post('http://localhost:3000/login', {
       login: data.login,
