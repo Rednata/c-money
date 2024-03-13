@@ -1,15 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from '../Container/Container';
 import style from './Exchange.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import {
-  getCurrencyRequestAsync
+  getCurrencyRequestAsync, postCurrencyRequestAsync
 } from '../../store/currencyStore/currencyAction';
 import { formatSum } from '../../utils/fomatSum';
+import { ErrorModal } from '../ErrorModal/ErrorModal';
 // import { Loader } from '../Loader/Loader';
 
 export const Exchange = () => {
   const dispatch = useAppDispatch();
+  const [showErrorModal, setshowErrorModal] = useState(false);
+  const errorMessage = useAppSelector(state => state.currency.error);
+
+  const [valueSelect, setValueSelect] =
+    useState<{from: string, to: string, amount: number }>(
+      { from: 'AUD', to: 'ETH', amount: 0 }
+    );
+
   const allCurrency = useAppSelector(state => state.currency.allCurrency);
   const userCurrency = Object
     .entries(useAppSelector(state => state.currency.userCurrency))
@@ -17,6 +26,34 @@ export const Exchange = () => {
       const { amount, code } = elem[1];
       return ([elem[0], amount, code]);
     });
+
+  const handleSubmit = (e: React.FormEvent<EventTarget>) => {
+    e.preventDefault();
+    console.log(valueSelect);
+    dispatch(postCurrencyRequestAsync(valueSelect));
+  };
+
+  const handleChange = (e: React.ChangeEvent<EventTarget>) => {
+    if (e.target instanceof HTMLSelectElement) {
+      console.log(123);
+      if (e.target.id === 'from') {
+        setValueSelect({ ...valueSelect, from: e.target.value });
+      } else {
+        setValueSelect({ ...valueSelect, to: e.target.value });
+      }
+    } else if (e.target instanceof HTMLInputElement) {
+      setValueSelect({ ...valueSelect, amount: Number(e.target.value) });
+    }
+  };
+
+  useEffect(() => {
+    if (errorMessage) {
+      setshowErrorModal(true);
+      setTimeout(() => {
+        setshowErrorModal(false);
+      }, 2000);
+    }
+  }, [errorMessage]);
 
   useEffect(() => {
     dispatch(getCurrencyRequestAsync('all-currencies'));
@@ -31,19 +68,29 @@ export const Exchange = () => {
         Изменение курса в режиме реального времени
         </div>
         <div className={style.wrapForm}>
-          <form className={style.form}>
+          <form
+            className={style.form}
+            onSubmit={handleSubmit}
+          >
+            {showErrorModal && <ErrorModal text={errorMessage} />}
             <fieldset className={style.fieldset}>
               <legend className={style.formTitle}>
               Обмен валюты
               </legend>
               <div className={style.wrapLabel}>
-                <label className={style.label}>Откуда</label>
-                <select name="" id="" className={style.select}>
+                <label className={style.label} htmlFor='from'>Откуда</label>
+                <select
+                  name=""
+                  id="from"
+                  className={style.select}
+                  onChange={handleChange}
+                  value={valueSelect.from}
+                >
                   {
                     userCurrency.map(elem => (
                       <option
                         className={style.option}
-                        value=""
+                        value={elem[0]}
                         key={Math.random().toString(16).slice(2, 10)}
                       >{elem[0]}
                       </option>)
@@ -52,13 +99,19 @@ export const Exchange = () => {
                 </select>
               </div>
               <div className={style.wrapLabel}>
-                <label className={style.label}>Куда</label>
-                <select name="" id="" className={style.select}>
+                <label className={style.label} htmlFor='for'>Куда</label>
+                <select
+                  name=""
+                  id="for"
+                  className={style.select}
+                  onChange={handleChange}
+                  value={valueSelect.to}
+                >
                   {
                     allCurrency.map(elem => (
                       <option
                         className={style.option}
-                        value=""
+                        value={elem}
                         key={Math.random().toString(16).slice(2, 10)}
                       >{elem}
                       </option>)
@@ -72,10 +125,11 @@ export const Exchange = () => {
                   className={style.input}
                   type="number"
                   min='1'
+                  required
+                  onChange={handleChange}
                 />
               </div>
             </fieldset>
-
           </form>
           <div className={style.myCurrency}>
             <ul className={style.titleCurrency}>

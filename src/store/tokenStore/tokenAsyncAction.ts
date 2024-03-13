@@ -4,6 +4,7 @@ import { tokenSlice } from './tokenSlice';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const tokenMiddleware = (store: any) => (next: any) => (action: any) => {
+  console.log('action: ', action);
   if (action.type === 'token/updateToken') {
     localStorage.setItem('token', action.payload);
   }
