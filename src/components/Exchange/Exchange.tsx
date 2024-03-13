@@ -13,7 +13,12 @@ import { WebsocketInfo } from '../WebsocketInfo/WebsocketInfo';
 export const Exchange = () => {
   const dispatch = useAppDispatch();
   const [showErrorModal, setshowErrorModal] = useState(false);
+  const isSuccess = useAppSelector(state => state.currency.isSuccess);
   const errorMessage = useAppSelector(state => state.currency.error);
+
+  const [
+    showSuccessTransferModal, setShowSuccessTransferModal
+  ] = useState(false);
 
   const [valueSelect, setValueSelect] =
     useState<{from: string, to: string, amount: number }>(
@@ -30,7 +35,6 @@ export const Exchange = () => {
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    console.log(valueSelect);
     dispatch(postCurrencyRequestAsync(valueSelect));
   };
 
@@ -57,6 +61,15 @@ export const Exchange = () => {
   }, [errorMessage]);
 
   useEffect(() => {
+    if (isSuccess) {
+      setShowSuccessTransferModal(true);
+      setTimeout(() => {
+        setShowSuccessTransferModal(false);
+      }, 2000);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
     dispatch(getCurrencyRequestAsync('all-currencies'));
     dispatch(getCurrencyRequestAsync('currencies'));
   }, []);
@@ -72,6 +85,10 @@ export const Exchange = () => {
             onSubmit={handleSubmit}
           >
             {showErrorModal && <ErrorModal text={errorMessage} />}
+            {showSuccessTransferModal &&
+              <ErrorModal text='Перевод успешно отправлен' />
+            }
+
             <fieldset className={style.fieldset}>
               <legend className={style.formTitle}>
               Обмен валюты

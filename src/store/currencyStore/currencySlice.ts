@@ -5,13 +5,15 @@ interface ICurrency {
   userCurrency: string[];
   isLoading: boolean;
   error: string;
+  isSuccess: boolean;
 }
 
 const initialState: ICurrency = {
   allCurrency: [],
   userCurrency: [],
   isLoading: false,
-  error: ''
+  error: '',
+  isSuccess: false,
 };
 
 export const allCurrencySlice = createSlice({
@@ -21,27 +23,32 @@ export const allCurrencySlice = createSlice({
     currencyRequest: (state) => {
       state.isLoading = true;
       state.error = '';
+      state.isSuccess = false;
     },
     getAllCurrencyRequestSuccess: (state, action) => {
       state.isLoading = false;
       state.allCurrency = action.payload;
       state.error = '';
+      state.isSuccess = false;
     },
     // getAllCurrencyRequestError: () => {},
     getUserCurrencyRequestSuccess: (state, action) => {
       state.isLoading = false;
       state.userCurrency = action.payload;
       state.error = '';
+      state.isSuccess = false;
     },
     // getUserCurrencyRequestError: () => {},
     postUserCurrencyRequestSuccess: (state, action) => {
       state.isLoading = false;
       state.error = '';
       state.userCurrency = action.payload;
+      state.isSuccess = true;
     },
     postUserCurrencyRequestError: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.error;
+      state.isSuccess = false;
     }
   }
 });
