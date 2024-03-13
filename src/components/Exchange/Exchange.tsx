@@ -65,7 +65,35 @@ export const Exchange = () => {
       <h2 className={style.title}>Обмен валюты</h2>
       <div className={style.wrap}>
         <div className={style.websocket}>
-        Изменение курса в режиме реального времени
+          <p className={style.websocketTitle}>
+            Изменение курса в режиме реального времени
+          </p>
+          <ul className={style.websocketList}>
+            <li className={style.websocketItem}>
+              <div className={style.nameCarrencies}>
+                <span className={style.name1}>AUD/</span>
+                <span className={style.name2}>BTC</span>
+              </div>
+              <div className={style.hr}></div>
+              <div className="courseCurrency">4,754</div>
+            </li>
+            <li className={style.websocketItem}>
+              <div className={style.nameCarrencies}>
+                <span className={style.name1}>BTC/</span>
+                <span className={style.name2}>BYR</span>
+              </div>
+              <div className={style.hr}></div>
+              <div className="courseCurrency">23,2383</div>
+            </li>
+            <li className={style.websocketItem}>
+              <div className={style.nameCarrencies}>
+                <span className={style.name1}>BYR/</span>
+                <span className={style.name2}>AUD</span>
+              </div>
+              <div className={style.hr}></div>
+              <div className="courseCurrency">-7.34</div>
+            </li>
+          </ul>
         </div>
         <div className={style.wrapForm}>
           <form
