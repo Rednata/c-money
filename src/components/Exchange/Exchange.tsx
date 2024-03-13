@@ -51,6 +51,13 @@ export const Exchange = () => {
     }
   };
 
+  const handleClickFrom = (e: React.MouseEvent<HTMLElement>) => {
+    console.log();
+    if (e.currentTarget.dataset.name) {
+      setValueSelect({ ...valueSelect, from: e.currentTarget.dataset.name });
+    }
+  };
+
   useEffect(() => {
     if (errorMessage) {
       setshowErrorModal(true);
@@ -154,11 +161,21 @@ export const Exchange = () => {
                   <li
                     key={Math.random().toString(16).slice(2, 10)}
                     className={style.itemCurrency}>
-                    <p className={style.nameCurrency}>{elem[0]}
+                    <button
+                      className={style.myCurrencyBtn}
+                      onClick={handleClickFrom}
+                      data-name={elem[0]}
+                    >
+                      <span className={style.nameCurrency}>{elem[0]}</span>
+                      <span className={style.amountCurrency}>
+                        {`${formatSum(elem[1])} ${elem[2]}`}
+                      </span>
+                    </button>
+                    {/* <p className={style.nameCurrency}>{elem[0]}
                     </p>
                     <span className={style.amountCurrency}>
                       {`${formatSum(elem[1])} ${elem[2]}`}
-                    </span>
+                    </span> */}
                   </li>
                 ))
               }
