@@ -2,11 +2,10 @@
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils/formatDate';
 import style from './ItemAccount.module.scss';
-import { IAccount } from '../../../store/accountsStore/accountsSlice';
 
 export interface ITransaction {
   amount: number;
-  date: Date;
+  date: string;
   from: string;
   to: string;
 }
@@ -14,7 +13,7 @@ export interface ITransaction {
 type Props = {
   data: {
     account: string;
-    date: Date;
+    date: string;
     balance: number;
     mine: boolean;
     transactions: ITransaction[];
@@ -28,8 +27,6 @@ export const ItemAccount = ({ data }: Props) => {
     balance,
     transactions,
   } = data;
-
-  // const lastDate = transactions[0].date
 
   return (
     <li className={style.account}>
@@ -45,7 +42,12 @@ export const ItemAccount = ({ data }: Props) => {
           </div>
           <div className="">
             <p>последняя операция</p>
-            <p>Нет данных</p>
+            { transactions[0] ? (
+              <p>{formatDate(transactions[0].date)}</p>
+              ) : (
+              <p>Нет данных</p>
+              )
+            }
           </div>
         </div>
       </Link>

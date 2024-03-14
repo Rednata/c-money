@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import style from './Accounts.module.scss';
 
 import { Button } from '../Button/Button';

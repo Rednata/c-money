@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IAccount {
   account: string;
-  date: Date;
+  date: string;
   balance: number;
   mine: boolean;
   transactions: [];
