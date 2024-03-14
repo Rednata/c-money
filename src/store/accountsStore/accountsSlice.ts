@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IAccount {
   account: string;
-  date?: Date;
+  date: Date;
   balance: number;
   mine: boolean;
   transactions: [];
@@ -51,6 +51,8 @@ export const accountsSlice = createSlice({
     },
     sortAccounts: (state, action) => {
       state.accounts = action.payload;
+      state.isLoading = false;
+      state.error = '';
     }
   },
 }

@@ -12,6 +12,7 @@ const initialState: IAccountInfo = {
   info: {
     account: '',
     balance: 0,
+    date: new Date(),
     mine: true,
     transactions: []
   },

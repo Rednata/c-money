@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils/formatDate';
 import style from './ItemAccount.module.scss';
+import { IAccount } from '../../../store/accountsStore/accountsSlice';
 
 export interface ITransaction {
   amount: number;
@@ -15,6 +16,7 @@ type Props = {
     account: string;
     date: Date;
     balance: number;
+    mine: boolean;
     transactions: ITransaction[];
   }
 }
