@@ -8,7 +8,7 @@ import { tokenRequestAsync } from '../../store/tokenStore/tokenAsyncAction';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import { ErrorModal } from '../ErrorModal/ErrorModal';
-import { useEffectShowErrorModal } from '../../hooks/useEffectShowErrorModal';
+import { useEffectShowModal } from '../../hooks/useEffectShowModal';
 
 export const Auth = () => {
   const [valueInput, setValueInput] = useState({
@@ -16,17 +16,14 @@ export const Auth = () => {
   });
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [auth, setAuth] = useState({ login: '', password: '' });
-  console.log('auth: ', auth);
 
   const errorMessage = useAppSelector(state => state.token.error);
-  console.log('errorMessage: ', errorMessage);
-
   const token = useAppSelector(state => state.token.token);
   const loginInput = useRef<HTMLInputElement>(null); //  для фокуса
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const showErrorModal = useEffectShowErrorModal(errorMessage);
-  console.log('showErrorModal: ', showErrorModal);
+  const showModalError = useEffectShowModal(errorMessage);
+  const showModalSuccess = useEffectShowModal(token);
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
@@ -45,7 +42,6 @@ export const Auth = () => {
 
   useEffect(() => {
     if (auth.login) {
-      console.log('auth: ', auth);
       dispatch(tokenRequestAsync(auth));
     }
   }, [auth]);
@@ -56,8 +52,10 @@ export const Auth = () => {
 
   // Загружаем страницу со счетами
   useEffect(() => {
-    if (token) {
-      navigate('/accounts');
+    if (token && !showModalSuccess) {
+      setTimeout(() => {
+        navigate('/accounts');
+      }, 1500);
     }
   }, [token]);
 
@@ -66,7 +64,8 @@ export const Auth = () => {
       <div className={style.wrapAuth}>
         <h1 className='visually-hidden'>Форма для авторизации</h1>
         <form className={style.form} onSubmit={handleSubmit}>
-          {showErrorModal && <ErrorModal text={errorMessage}/>}
+          {showModalError && <ErrorModal text={errorMessage}/>}
+          {showModalSuccess && <ErrorModal text='Вы успешно авторизовались'/>}
           <h2 className={style.title}>Вход в аккаунт</h2>
           <label
             className={style.label}
