@@ -1,10 +1,8 @@
-// import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { URI_API } from '../../const/const';
 import { tokenSlice } from './tokenSlice';
-// import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const tokenMiddleware = (store: any) => (next: any) => (action: any) => {
-  console.log('action: ', action);
+export const tokenMiddleware = () => (next: any) => (action: any) => {
   if (action.type === 'token/updateToken') {
     localStorage.setItem('token', action.payload);
   }
@@ -18,8 +16,9 @@ interface IAuth {
 
 export const tokenRequestAsync = (data: IAuth) =>
   (dispatch: any) => {
+    console.log('data:>>>>>>>>>>> ', data);
     dispatch(tokenSlice.actions.tokenRequest());
-    axios.post('http://localhost:3000/login', {
+    axios.post(`${URI_API}login`, {
       login: data.login,
       password: data.password,
     })
@@ -32,28 +31,6 @@ export const tokenRequestAsync = (data: IAuth) =>
         }
       })
       .catch(error => {
-        if (error.response) {
-          console.warn(error.response.data);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log(error.message);
-        }
-
-        // dispatch(tokenSlice.actions.tokenRequestError(err));
+        console.log(error);
       });
   };
-
-
-// export const authRequestAsync =
-//   createAsyncThunk<string, data: {login: string, password: string}>(
-//     'auth/fetch',
-//     (data) => {
-//       console.log(data);
-//       return axios.post('http://localhost:3000/login', {
-//         login: data.login,
-//         password: data.password,
-//       })
-//         .then(res => res);
-//     }
-//   );
