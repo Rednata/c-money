@@ -104,117 +104,122 @@ export const AccountInfo = () => {
     'textTransparent' : 'textColor');
   return (
     <Container>
-      <div className={style.wrapTitle}>
-        <h1 className={style.title}>{`Счет №${id}`}</h1>
-        <Button text='Вернуться' type='button' cn='btnBack' func={handleClick}/>
-      </div>
-      <div className={style.wrap}>
-        <div className={style.chart}>
-          <LineChart dataInput={dataLineChart} />
+      <div className={style.wrapInfo}>
+        <div className={style.wrapTitle}>
+          <h1 className={style.infoTitle}>{`Счет №${id}`}</h1>
+          <div className={style.wrapBtnBack}>
+            <Button
+              text='Вернуться' type='button' cn='btnBack' func={handleClick}/>
+          </div>
         </div>
-        <div className={style.history}>
-          <table cellSpacing={24} className={style.table}>
-            <thead className={style.thead}>
-              <tr>
-                <th>Счет</th>
-                <th>Сумма</th>
-                <th>Дата</th>
-              </tr>
-            </thead>
-            <tbody className={style.tbody}>
-              {transactionsHistory.map(({ date, from, amount }) =>
-                (
-                  <tr
-                    className={style.tr}
-                    key={Math.random().toString(16).slice(2, 8)}>
-                    <td>{from}</td>
-                    {from === id ?
-                    (<td className={style.amountColor}>-{amount}</td>
-                    ) : (
-                    <td>+{amount}</td>)
-                    }
-                    <td>{formatDate(date)}</td>
-                  </tr>
-                )
-              )}
-            </tbody>
+        <div className={style.wrap}>
+          <div className={style.chart}>
+            <LineChart dataInput={dataLineChart} />
+          </div>
+          <div className={style.history}>
+            <table cellSpacing={24} className={style.table}>
+              <thead className={style.thead}>
+                <tr>
+                  <th>Счет</th>
+                  <th>Сумма</th>
+                  <th>Дата</th>
+                </tr>
+              </thead>
+              <tbody className={style.tbody}>
+                {transactionsHistory.map(({ date, from, amount }) =>
+                  (
+                    <tr
+                      className={style.tr}
+                      key={Math.random().toString(16).slice(2, 8)}>
+                      <td>{from}</td>
+                      {from === id ?
+                      (<td className={style.amountColor}>-{amount}</td>
+                      ) : (
+                      <td>+{amount}</td>)
+                      }
+                      <td>{formatDate(date)}</td>
+                    </tr>
+                  )
+                )}
+              </tbody>
 
-          </table>
-        </div>
-        <div className={style.static}>
-          <h2 className={style.title}>Статистика</h2>
-          <div className={style.staticWrap}>
+            </table>
+          </div>
+          <div className={style.static}>
+            <h2 className={style.title}>Статистика</h2>
+            <div className={style.staticWrap}>
 
-            <div className={style.btnWrap}>
-              <button
-                className={style.staticBtn}
-                onClick={handleClickStatic}
-              >Неделя
-              </button>
-              <button
-                className={style.staticBtn}
-                onClick={handleClickStatic}
-              >Месяц</button>
-              <button
-                className={style.staticBtn}
-                onClick={handleClickStatic}
-              >Год</button>
-            </div>
+              <div className={style.btnWrap}>
+                <button
+                  className={style.staticBtn}
+                  onClick={handleClickStatic}
+                >Неделя
+                </button>
+                <button
+                  className={style.staticBtn}
+                  onClick={handleClickStatic}
+                >Месяц</button>
+                <button
+                  className={style.staticBtn}
+                  onClick={handleClickStatic}
+                >Год</button>
+              </div>
 
-            <div className={style.DoughnutChart}>
-              <DoughnutChart balanceItems={balanceItems}/>
-              <div className={style.wrapValue}>
-                <p className={style[classNameAmount]}>
-                  {formatSum(balanceItems[0] + balanceItems[1])
-                  } &#8381;</p>
-                <p className={style[classNameAmount]}>
-                  {}
-                  {formatSum(balanceItems[0])
-                  } &#8381;
-                </p>
-                <p className={style[classNameAmount]}>
-                  {formatSum(balanceItems[1])
-                  } &#8381;</p>
+              <div className={style.DoughnutChart}>
+                <DoughnutChart balanceItems={balanceItems}/>
+                <div className={style.wrapValue}>
+                  <p className={style[classNameAmount]}>
+                    {formatSum(balanceItems[0] + balanceItems[1])
+                    } &#8381;</p>
+                  <p className={style[classNameAmount]}>
+                    {}
+                    {formatSum(balanceItems[0])
+                    } &#8381;
+                  </p>
+                  <p className={style[classNameAmount]}>
+                    {formatSum(balanceItems[1])
+                    } &#8381;</p>
+                </div>
               </div>
             </div>
+            <ChartLine />
           </div>
-          <ChartLine />
+
         </div>
+        <div className={style.transfer}>
+          <h2 className={style.title}>Перевод</h2>
+          {showErrorModal && <ErrorModal text={errorTransfer} />}
+          <form className={style.form} onSubmit={handleSubmit}>
+            <div className={style.labelWrap}>
+              <label htmlFor='account' className={style.label} />Счет
+              <input
+                className={style.input}
+                type="text"
+                id='account'
+                required
+                onChange={handleChange}
+              />
+            </div>
+            <div className={style.labelWrap}>
+              <label htmlFor='amount' className={style.label} />Сумма
+              <input
+                className={style.input}
+                type="number"
+                id='amount'
+                required
+                pattern="[0123456789]"
+                min="1"
+                onChange={handleChange}
+              />
+            </div>
 
-      </div>
-      <div className={style.transfer}>
-        <h2 className={style.title}>Перевод</h2>
-        {showErrorModal && <ErrorModal text={errorTransfer} />}
-        <form className={style.form} onSubmit={handleSubmit}>
-          <div className={style.labelWrap}>
-            <label htmlFor='account' className={style.label} />Счет
-            <input
-              className={style.input}
-              type="text"
-              id='account'
-              required
-              onChange={handleChange}
-            />
-          </div>
-          <div className={style.labelWrap}>
-            <label htmlFor='amount' className={style.label} />Сумма
-            <input
-              className={style.input}
-              type="number"
-              id='amount'
-              required
-              pattern="[0123456789]"
-              min="1"
-              onChange={handleChange}
-            />
-          </div>
+            <Button
+              cn='btnTransfer'
+              text='Перевести'
+              type="submit"/>
+          </form>
 
-          <Button
-            cn='btnTransfer'
-            text='Перевести'
-            type="submit"/>
-        </form>
-
+        </div>
       </div>
 
     </Container>

@@ -4,14 +4,6 @@
   padding-top: 100px;
   position: relative;
   margin-bottom: 80px;
-
-  @include desktop1280 {
-    // padding-top: 80px;
-  }
-
-  // @include tablet850 {
-  //   padding-top: 60px;
-  // }
 }
 
 .wrapTitle {
@@ -57,14 +49,10 @@
 
   @include tablet850 {
     justify-content: space-around;
-    // flex-direction: column;
-    // align-items: center;
   }
 
   @include mobile480 {
     flex-direction: column;
-    // flex-direction: row;
-    // justify-content: space-between;
   }
 }
 
@@ -76,10 +64,6 @@
 
   @include desktop1280 {
     font-size: 22px;
-  }
-
-  @include tablet850 {
-    // align-self: flex-start;
   }
 }
 
@@ -98,7 +82,6 @@
   @include mobile480 {
     flex-direction: row;
     align-items: center;
-
   }
 }
 

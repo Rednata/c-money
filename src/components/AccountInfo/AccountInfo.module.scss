@@ -1,29 +1,79 @@
+@import '../../var.scss';
+
+.wrapInfo {
+  position: relative;
+  padding-top: 100px;
+}
+
 .wrapTitle {
   display: flex;
   justify-content: space-between;
   margin-bottom: 70px;
+
+  @include desktop1280 {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  @include tablet850 {
+    margin-bottom: 40px;
+  }
 }
 
-.title {
+.infoTitle {
   font-family: Comfortaa, Arial, sans-serif;
   font-size: 26px;
   font-weight: 700;
+
+  @include tablet850 {
+    font-size: 22px;
+  }
+
+  @include mobile480 {
+    font-size: 15px;
+  }
 }
 
+.wrapBtnBack {
+
+  @include desktop1280 {
+    position: absolute;
+    top: 20px;
+    right: 0;
+  }
+}
 .wrap {
   display: grid;
-  grid-template-columns: 1fr minmax(50%, 1fr);
+  grid-template-columns: 49% 49%;
   grid-template-areas: 
     'chart history'
     'static history';
   gap: 20px;
   margin-bottom: 80px;
+
+  @include desktop1280 {
+    grid-template-columns: 67%;
+    grid-template-areas: 
+    'chart'
+    'history'
+    'static';
+    justify-content: center;
+    gap: 40px;
+  }
+
+  @include tablet850 {
+    grid-template-columns: 100%;
+  }
 }
 
 .chart {
   grid-area: chart;
   border: 1px solid red;
   margin-bottom: 90px;
+
+  @include desktop1280 {
+    margin-bottom: 0;
+  }
 
 }
 
@@ -34,37 +84,71 @@
   border-radius: 10px;
   background-color: var(--darkColor);
 
-  // overflow-y: auto;
+  @include tablet850 {
+    padding: 5px;
+  }
+
+  @include mobile480 {
+    
+  }
+  overflow-x: auto;
 }
 
 .table {
   border-collapse: collapse; 
   width: 100%;
+
+  @include tablet850 {
+    font-size: 14px;
+  }
+
+  @include mobile480 {
+    font-size: 14px;
+    
+  }
 }
 .thead {
   color: var(--colorText);
   text-align: left;
 
   th{
-    border-bottom: 1px solid var(--backgroundColor);
-    border-right: 1px solid var(--backgroundColor);
-    padding: 20px;
-  }
+    border-bottom: 1px solid var(--backgroundColor);    
+    padding: 0 10px 15px;
 
+    &:not(:last-child) {
+      border-right: 1px solid var(--backgroundColor);
+    }
+
+    @include tablet850 {
+      padding: 10px;
+    }
+  }
 }
 
 .tbody {
   font-weight: 700;
 
   td {
-    border-right: 1px solid var(--backgroundColor);
-    padding: 12px 20px;
+    // padding-top: 20px;
+    padding: 20px 10px;
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--backgroundColor);
+    }
+
+    @include tablet850 {
+      padding: 15px 10px;
+    }
+
+    @include mobile480 {
+      padding: 10px 10px;
+    }
    }
 }
 
 
 .tr {
-  padding: 24px 0;
+  // padding: 24px 0;
 }
 
 .amountColor {

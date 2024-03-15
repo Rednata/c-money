@@ -48,6 +48,11 @@
   height: 49px;
   padding: 12px 30px;
 
+  @include desktop1280 {
+    // height: 30px;
+    // min-width: 200px;
+  }
+
   &:before {
     content: '';
     display: block;
