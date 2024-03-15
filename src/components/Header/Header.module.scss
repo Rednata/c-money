@@ -7,7 +7,15 @@
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: var(--darkColor);
-  margin-bottom: 100px;
+  
+
+  @include desktop1280 {
+  
+  }
+
+  @include tablet850 {
+  
+  }
 }
 
 .wrap {

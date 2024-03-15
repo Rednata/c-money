@@ -6,9 +6,12 @@
   padding: 0 130px;
   margin: 0 auto;
   // border: 1px solid red;
-  
-  @include tablet850 {
+  @include desktop1280 {
     padding: 0 50px;
+  }
+
+  @include tablet850 {
+    padding: 0 30px;
   }
   @include mobile480 {
     padding: 0 16px;

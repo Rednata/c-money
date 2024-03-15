@@ -9,6 +9,10 @@
   font-weight: 700;
   background: linear-gradient(47deg, #2e00b1 0%, #8100bd 48.44%, #a400be 100%);
 
+  @include tablet850 {
+    font-size: 15px;
+  }
+
   @include mobile480 {
     height: 50px;
   }
@@ -29,6 +33,11 @@
 .btnAccounts {
   min-height: 49px;
   min-width: 241px;
+
+  @include tablet850 {
+    height: 30px;
+    min-width: 200px;
+  }
 }
 
 .btnBack {

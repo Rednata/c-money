@@ -1,11 +1,17 @@
+@import '../../../var.scss';
+
 .account {
   color: var(--colorText);
   border-radius: 10px;
-  min-width: 380px;
   padding: 16px 20px;
   background-color: var(--darkColor);
   border: 2px solid transparent;
   transition: border 0.2s;
+
+  @include desktop1280 {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 
   &:hover {
     border-color: var(--borderColor);
@@ -22,8 +28,13 @@
   font-size: 32px;
   color: var(--text);
   margin-bottom: 18px;
+
+  @include desktop1280 {
+   font-size: 26px; 
+  }
 }
 .wrapDates {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }

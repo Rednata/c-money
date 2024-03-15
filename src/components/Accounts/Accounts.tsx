@@ -5,7 +5,6 @@ import { Button } from '../Button/Button';
 import { Container } from '../Container/Container';
 import { ItemAccount } from './ItemAccount/ItemAccount';
 
-
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import {
@@ -46,12 +45,14 @@ export const Accounts = () => {
         <div className={style.wrapAccounts}>
           <div className={style.wrapTitle}>
             <p className={style.title}>Здравствуйте, Guest!</p>
-            <Button
-              cn='btnAccounts'
-              text='Открыть новый счет'
-              type='button'
-              func={handleClick}
-            />
+            <div className={style.wrapAccountBtn}>
+              <Button
+                cn='btnAccounts'
+                text='Открыть новый счет'
+                type='button'
+                func={handleClick}
+              />
+            </div>
           </div>
           <div className={style.wrapTitleAccounts}>
             <h2 className={style.titleAccounts}>Мои счета</h2>
