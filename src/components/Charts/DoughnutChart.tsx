@@ -32,7 +32,7 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
     // maintainAspectRatio: true,
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: 'right' as const,
         labels: {
           // boxWidth: 16,
@@ -110,8 +110,10 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
     <Doughnut
       data={!income && !spending ? data1 : data}
       options={options}
-      height='220px'
-      // width='220px'
+      // height='50px'
+      // width='50px'
+      // height='120px'
+      // width='120px'
     />
   );
 };

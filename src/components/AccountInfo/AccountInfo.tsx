@@ -33,6 +33,7 @@ export const AccountInfo = () => {
   const [infoTransfer, setInfoTransfer] = useState({ account: '', amount: 0 });
 
   const [balanceItems, setBalanceItems] = useState<number[]>([0, 0]);
+  console.log('balanceItems: ', balanceItems);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -145,6 +146,7 @@ export const AccountInfo = () => {
 
             </table>
           </div>
+
           <div className={style.static}>
             <h2 className={style.title}>Статистика</h2>
             <div className={style.staticWrap}>
@@ -167,22 +169,34 @@ export const AccountInfo = () => {
 
               <div className={style.DoughnutChart}>
                 <DoughnutChart balanceItems={balanceItems}/>
-                <div className={style.wrapValue}>
-                  <p className={style[classNameAmount]}>
-                    {formatSum(balanceItems[0] + balanceItems[1])
-                    } &#8381;</p>
-                  <p className={style[classNameAmount]}>
-                    {}
+              </div>
+
+              <div className={style.wrapValue}>
+                <div className={style.valueName}>
+                  <span className={style.labelName}>Баланс</span>
+                  <span className={style[classNameAmount]}>
+                    { formatSum(balanceItems[0] + balanceItems[1])
+                    } &#8381;
+                  </span>
+                </div>
+                <div className={style.valueNameIncome}>
+                  <span className={style.labelName}>Доходы</span>
+                  <span className={style[classNameAmount]}>
                     {formatSum(balanceItems[0])
                     } &#8381;
-                  </p>
-                  <p className={style[classNameAmount]}>
-                    {formatSum(balanceItems[1])
-                    } &#8381;</p>
+                  </span>
                 </div>
+                <div className={style.valueNameSpending}>
+                  <span className={style.labelName}>Расходы</span>
+                  <span className={style[classNameAmount]}>
+                    {formatSum(balanceItems[1])
+                    } &#8381;
+                  </span>
+                </div>
+
               </div>
             </div>
-            <ChartLine />
+            {/* <ChartLine /> */}
           </div>
 
         </div>

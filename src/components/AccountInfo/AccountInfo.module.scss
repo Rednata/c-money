@@ -129,7 +129,6 @@
   font-weight: 700;
 
   td {
-    // padding-top: 20px;
     padding: 20px 10px;
 
     &:not(:last-child) {
@@ -146,36 +145,68 @@
    }
 }
 
-
-.tr {
-  // padding: 24px 0;
-}
-
 .amountColor {
   color: var(--borderColor);
 }
 
 .static {
-  grid-area: static;
-  // border: 1px solid white;
+
 }
 
 .title {
+  text-align: center;
   margin-bottom: 40px;
+
+  @include tablet650 {
+    margin-bottom: 25px;
+  }
+
+
 }
 
 .staticWrap {
-  display: flex;
-  justify-content: space-between;
+  // border: 1px solid green;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-template-areas: 
+    'Btns Doughnut Value';
+  justify-content: flex-start;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
+  padding: 10px;
+
+  @include desktop1280 {
+    grid-template-areas: 
+    'Btns Btns'
+    'Doughnut Value';
+     grid-template-columns: repeat(2, max-content);
+   justify-content: center;
+  }
+
+  @include tablet650 {
+    grid-template-areas: 
+    'Btns'
+    'Doughnut'
+     'Value';
+     grid-template-columns: 1fr;
+
+  }
+
 }
 
 .btnWrap {
+  grid-area: Btns;
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: flex-start;
+
+  @include desktop1280 {
+    flex-direction: row;
+    gap: 20px;
+    // border: 1px solid red;
+    justify-content: center;
+  }
 }
 
 .staticBtn {
@@ -185,23 +216,73 @@
 }
 
 .DoughnutChart {
-  display: flex;
-  align-items: center;
-  // flex-grow: 1;
-  border: 1px solid red;
-  // width: 300px;
-  // height: 150px;
+  grid-area: Doughnut;
+  padding: 5px;
+  width: 220px;
+  height: 220px;
+
+  @include tablet650 {
+    margin: 0 auto;    
+  }
 }
 
 .wrapValue {
+  grid-area: Value;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  border: 1px solid red;
-  flex-grow: 1;
+  gap: 16px;
+  // border: 1px solid red;
+  flex-shrink: 0;
+  min-width: 100px;
+
+  @include tablet650 {
+    align-items: center;
+  }
 }
 
+.labelName {
+  min-width: 70px;
+}
+
+.valueName, 
+.valueNameIncome,
+.valueNameSpending {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--colorText);
+}
+
+.valueName {
+margin-left: 26px;
+}
+
+.valueNameIncome,
+.valueNameSpending {
+  &:before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+}
+
+.valueNameIncome {
+  &:before {
+    background-color: #4B00CA;
+  }
+}
+
+.valueNameSpending {
+  &:before {
+    background-color: var(--borderColor);
+  }
+}
 .textColor {
+  font-weight: 700;
+  color: var(--text);
 }
 
 .textTransparent {
