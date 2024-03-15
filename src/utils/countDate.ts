@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import moment from 'moment';
-import { ITransaction } from '../components/Accounts/ItemAccount/ItemAccount';
+import { ITransaction } from '../const-Interface/interface';
 
 export const countDate = (arr: any, id: string, balance: number) => {
   const startDate = moment(new Date().setDate(1))

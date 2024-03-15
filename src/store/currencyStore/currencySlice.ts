@@ -1,12 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface ICurrency {
-  allCurrency: string[];
-  userCurrency: string[];
-  isLoading: boolean;
-  error: string;
-  isSuccess: boolean;
-}
+import { ICurrency } from '../../const-Interface/interface';
 
 const initialState: ICurrency = {
   allCurrency: [],

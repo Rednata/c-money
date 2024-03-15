@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { accountsSlice } from './accountsSlice';
-import { URI_API } from '../../const/const';
+import { URI_API } from '../../const-Interface/const';
 import { accountInfoSlice } from '../accountInfoSlice/accountInfoSlice';
 
 export const accountRequestAsync = (pathname: string) =>

@@ -2,13 +2,7 @@
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils/formatDate';
 import style from './ItemAccount.module.scss';
-
-export interface ITransaction {
-  amount: number;
-  date: string;
-  from: string;
-  to: string;
-}
+import { ITransaction } from '../../../const-Interface/interface';
 
 type Props = {
   data: {

@@ -1,18 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface IAccount {
-  account: string;
-  date: string;
-  balance: number;
-  mine: boolean;
-  transactions: [];
-}
-
-interface IArrayAccounts {
-  accounts: IAccount[];
-  error: string;
-  isLoading: boolean;
-}[];
+import { IAccount, IArrayAccounts } from '../../const-Interface/interface';
 
 const initialState: IArrayAccounts = {
   accounts: [],

@@ -1,13 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { tokenRequestAsync } from './tokenAsyncAction';
-
-interface IToken {
-  token: string;
-  error: string;
-  isLoading: boolean;
-  temp: string;
-}
+import { IToken } from '../../const-Interface/interface';
 
 const initialState: IToken = {
   token: '',

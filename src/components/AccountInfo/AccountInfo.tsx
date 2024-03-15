@@ -15,7 +15,6 @@ import { countDate } from '../../utils/countDate';
 import { ChartLine } from '../Charts/LineChart1';
 import { DoughnutChart } from '../Charts/DoughnutChart';
 import moment from 'moment';
-import { ITransaction } from '../Accounts/ItemAccount/ItemAccount';
 import { getSum } from '../../utils/getSum';
 import {
   postTransferRequestAsync
@@ -23,6 +22,7 @@ import {
 import { ErrorModal } from '../ErrorModal/ErrorModal';
 import { formatSum } from '../../utils/fomatSum';
 import { LineChart } from '../Charts/LineChart';
+import { ITransaction } from '../../const-Interface/interface';
 
 
 export const AccountInfo = () => {

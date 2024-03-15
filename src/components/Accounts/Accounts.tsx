@@ -11,12 +11,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import {
   accountAddAsync, accountRequestAsync
 } from '../../store/accountsStore/accountAsyncAction';
-import {
-  IAccount, accountsSlice
-} from '../../store/accountsStore/accountsSlice';
+import { accountsSlice } from '../../store/accountsStore/accountsSlice';
 import { tokenSlice } from '../../store/tokenStore/tokenSlice';
 import { funcSort } from '../../utils/sort';
 import { SelectList } from '../SelectList/SelectList';
+import { IAccount } from '../../const-Interface/interface';
 
 export const Accounts = () => {
   const token = useAppSelector(state => state.token.token) ||

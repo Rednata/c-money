@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IAccount } from '../accountsStore/accountsSlice';
-
-interface IAccountInfo {
-  isLoading: boolean;
-  info: IAccount;
-  error: string;
-}
+import { IAccountInfo } from '../../const-Interface/interface';
 
 const initialState: IAccountInfo = {
   isLoading: false,

@@ -1,12 +1,22 @@
+@import '../../var.scss';
+
 .main {
   margin-bottom: 100px;
+  background-color: var(--darkColor);
+  padding: 50px 130px;  
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+
+  @include tablet850 {
+    width: 80%;
+    padding: 30px 10%;
+  }
+
 }
 
 .wrapAuth {
-  padding: 50px 130px;  
-  width: 580px;
-  background-color: var(--darkColor);
-  border-radius: 10px;
+  
 }
 
 .form {
@@ -21,6 +31,15 @@
   font-size: 38px;
   text-align: center;
   margin-bottom: 20px;
+
+  @include tablet850 {
+    font-size: 30px;
+  }
+
+  @include mobile480 {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
 }
 
 .label {
@@ -46,6 +65,10 @@
   border: 2px solid transparent;
   padding-left: 20px;
   outline: none;
+
+  @include mobile480 {
+    height: 50px;
+  }
 
   &:focus {
     outline: none;;

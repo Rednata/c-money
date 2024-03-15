@@ -1,4 +1,4 @@
-import { ITransaction } from '../components/Accounts/ItemAccount/ItemAccount';
+import { ITransaction } from '../const-Interface/interface';
 
 export const getSum = (arr: ITransaction[], id: string): number[] => {
   const income = arr.reduce(

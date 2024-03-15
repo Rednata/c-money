@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { URI_API } from '../../const/const';
+import { URI_API } from '../../const-Interface/const';
 import { accountInfoSlice } from '../accountInfoSlice/accountInfoSlice';
 
 /* eslint-disable no-unused-vars */
