@@ -91,6 +91,11 @@
   border: 1px solid transparent;
   outline: none;
 
+  @include mobile480 {
+    top: 5%;
+    transform: translateY(0);
+  }
+
   &:focus {
     // outline: none;   
     border-color: var(--borderColor);

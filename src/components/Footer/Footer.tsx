@@ -8,7 +8,7 @@ export const Footer = () => (
     <footer className={style.footer}>
       <Container>
         <div className={style.footerWrap}>
-          <LogoSvg />
+          <LogoSvg className={style.logo}/>
           <p>© C-Money, 2022</p>
         </div>
       </Container>

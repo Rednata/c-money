@@ -1,8 +1,11 @@
+@import '../../var.scss';
+
 .header {
   width: 100%;
   display: flex;
   align-items: center;
-  min-height: 78px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   background-color: var(--darkColor);
   margin-bottom: 100px;
 }
@@ -10,5 +13,19 @@
 .wrap {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
 
+.logo {
+  @include mobile480 {
+    display: none;
+  }
+}
+
+.mobileLogo {
+  display: none;
+  
+  @include mobile480 {
+    display: block;
+  }
 }

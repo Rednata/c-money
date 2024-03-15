@@ -1,4 +1,5 @@
 import { ReactComponent as LogoSvg } from './logo.svg';
+import { ReactComponent as LogoMobileSvg } from './logoMobile.svg';
 import style from './Header.module.scss';
 import { Container } from '../Container/Container';
 
@@ -12,7 +13,10 @@ export const Header = () => {
     <header className={style.header}>
       <Container>
         <div className={style.wrap}>
-          <LogoSvg className={style.logo}/>
+          <a href="/">
+            <LogoMobileSvg className={style.mobileLogo}/>
+            <LogoSvg className={style.logo}/>
+          </a>
           {(location.pathname !== '/') && <Nav />}
         </div>
       </Container>

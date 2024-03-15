@@ -24,14 +24,11 @@ export const SelectList = () => {
   };
 
   useEffect(() => {
-    console.log(valueSort);
     setSortList(list.filter(item => item !== valueSort));
     const newSortList = funcSort(valueSort, listAccounts);
-    console.log('newSortList: ', newSortList);
     dispatch(accountsSlice.actions.sortAccounts(newSortList));
   }, [valueSort]);
 
-  console.log();
   return (
     <>
       <button className={isActivebtnSort ?
