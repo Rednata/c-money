@@ -30,7 +30,7 @@ export const WebsocketInfo = () => {
   return (
     <div className={style.websocket}>
       <p className={style.websocketTitle}>
-        Изменение курса в режиме реального времени
+        Изменение курса в&nbsp;режиме реального времени
       </p>
       <ul className={style.websocketList}>
         {currency.map(elem => (

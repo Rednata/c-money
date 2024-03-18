@@ -86,104 +86,106 @@ export const Exchange = () => {
       <h2 className={style.title}>Обмен валюты</h2>
       <div className={style.wrap}>
         <WebsocketInfo />
-        <div className={style.wrapForm}>
-          <form
-            className={style.form}
-            onSubmit={handleSubmit}
-          >
-            {showErrorModal && <ErrorModal text={errorMessage} />}
-            {showSuccessTransferModal &&
-              <ErrorModal text='Перевод успешно отправлен' />
-            }
+        <form
+          className={style.form}
+          onSubmit={handleSubmit}
+        >
+          {showErrorModal && <ErrorModal text={errorMessage} />}
+          {showSuccessTransferModal &&
+            <ErrorModal text='Перевод успешно отправлен' />
+          }
 
-            <fieldset className={style.fieldset}>
-              <legend className={style.formTitle}>
-              Обмен валюты
-              </legend>
-              <div className={style.wrapLabel}>
-                <label className={style.label} htmlFor='from'>Откуда</label>
-                <select
-                  name=""
-                  id="from"
-                  className={style.select}
-                  onChange={handleChange}
-                  value={valueSelect.from}
-                >
-                  {
-                    userCurrency.map(elem => (
-                      <option
-                        className={style.option}
-                        value={elem[0]}
-                        key={Math.random().toString(16).slice(2, 10)}
-                      >{elem[0]}
-                      </option>)
-                    )
-                  }
-                </select>
-              </div>
-              <div className={style.wrapLabel}>
-                <label className={style.label} htmlFor='for'>Куда</label>
-                <select
-                  name=""
-                  id="for"
-                  className={style.select}
-                  onChange={handleChange}
-                  value={valueSelect.to}
-                >
-                  {
-                    allCurrency.map(elem => (
-                      <option
-                        className={style.option}
-                        value={elem}
-                        key={Math.random().toString(16).slice(2, 10)}
-                      >{elem}
-                      </option>)
-                    )
-                  }
-                </select>
-              </div>
-              <div className={style.wrapLabel}>
-                <label className={style.label}>Сумма</label>
-                <input
-                  className={style.input}
-                  type="number"
-                  min='1'
-                  required
-                  onChange={handleChange}
-                />
-              </div>
-            </fieldset>
-          </form>
-          <div className={style.myCurrency}>
-            <ul className={style.titleCurrency}>
-              {
-                userCurrency.map(elem => (
-                  <li
-                    key={Math.random().toString(16).slice(2, 10)}
-                    className={style.itemCurrency}>
-                    <button
-                      className={style.myCurrencyBtn}
-                      onClick={handleClickFrom}
-                      data-name={elem[0]}
-                    >
-                      <span className={style.nameCurrency}>{elem[0]}</span>
-                      <span className={style.amountCurrency}>
-                        {`${formatSum(elem[1])} ${elem[2]}`}
-                      </span>
-                    </button>
-                    {/* <p className={style.nameCurrency}>{elem[0]}
-                    </p>
+          <fieldset className={style.fieldset}>
+            <legend className={style.formTitle}>
+            Обмен валюты
+            </legend>
+            {/* <div className={style.innerForm}> */}
+            <div className={style.wrapLabel}>
+              <label className={style.label} htmlFor='from'>Откуда</label>
+              <select
+                name=""
+                id="from"
+                className={style.select}
+                onChange={handleChange}
+                value={valueSelect.from}
+              >
+                {
+                  userCurrency.map(elem => (
+                    <option
+                      className={style.option}
+                      value={elem[0]}
+                      key={Math.random().toString(16).slice(2, 10)}
+                    >{elem[0]}
+                    </option>)
+                  )
+                }
+              </select>
+            </div>
+            <div className={style.wrapLabel}>
+              <label className={style.label} htmlFor='for'>Куда</label>
+              <select
+                name=""
+                id="for"
+                className={style.select}
+                onChange={handleChange}
+                value={valueSelect.to}
+              >
+                {
+                  allCurrency.map(elem => (
+                    <option
+                      className={style.option}
+                      value={elem}
+                      key={Math.random().toString(16).slice(2, 10)}
+                    >{elem}
+                    </option>)
+                  )
+                }
+              </select>
+            </div>
+
+            <div className={style.wrapLabel}>
+              <label className={style.label}>Сумма</label>
+              <input
+                className={style.input}
+                type="number"
+                min='1'
+                required
+                onChange={handleChange}
+              />
+            </div>
+            {/* </div> */}
+
+          </fieldset>
+        </form>
+
+        <div className={style.myCurrency}>
+          <ul className={style.titleCurrency}>
+            {
+              userCurrency.map(elem => (
+                <li
+                  key={Math.random().toString(16).slice(2, 10)}
+                  className={style.itemCurrency}>
+                  <button
+                    className={style.myCurrencyBtn}
+                    onClick={handleClickFrom}
+                    data-name={elem[0]}
+                  >
+                    <span className={style.nameCurrency}>{elem[0]}</span>
                     <span className={style.amountCurrency}>
                       {`${formatSum(elem[1])} ${elem[2]}`}
-                    </span> */}
-                  </li>
-                ))
-              }
+                    </span>
+                  </button>
+                  {/* <p className={style.nameCurrency}>{elem[0]}
+                  </p>
+                  <span className={style.amountCurrency}>
+                    {`${formatSum(elem[1])} ${elem[2]}`}
+                  </span> */}
+                </li>
+              ))
+            }
 
-            </ul>
-          </div>
+          </ul>
         </div>
-
       </div>
     </Container>
   );

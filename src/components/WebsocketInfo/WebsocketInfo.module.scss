@@ -1,15 +1,35 @@
+@import '../../var.scss';
+
 .websocket {
+  grid-area: Websocket;
   background-color: var(--darkColor);
   border-radius: 10px;
   padding: 15px 20px 30px 15px;
   align-self: flex-start;
-  height: 380px;
+  height: 400px;
+  
+
+  @include tablet650 {
+    height: 420px;
+  }
+  @include mobile480 {
+    height: 400px;
+  }
 }
 
 .websocketTitle {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
+
+  @include desktop1280 {
+  font-size: 18px;
+  }
+
+  @include mobile480 {
+    font-size: 16px;
+    
+  }
 }
 
 .websocketList {
@@ -42,7 +62,6 @@
   width: 10px;
   background-image: url("./up.svg");
   background-repeat: no-repeat;
-  // background-position: center;
   margin-left: 2px;
 }
 
@@ -52,6 +71,5 @@
   width: 10px;
   background-image: url("./down.svg");
   background-repeat: no-repeat;
-  // background-position: center;
   margin-left: 2px;
 }

@@ -187,7 +187,7 @@ export const AccountInfo = () => {
                   </span>
                 </div>
                 <div className={style.valueNameSpending}>
-                  <span className={style.labelName}>Расходы</span>
+                  <span >Расходы</span>
                   <span className={style[classNameAmount]}>
                     {formatSum(balanceItems[1])
                     } &#8381;
@@ -227,10 +227,12 @@ export const AccountInfo = () => {
               />
             </div>
 
-            <Button
-              cn='btnTransfer'
-              text='Перевести'
-              type="submit"/>
+            <div className={style.btnInputWrap}>
+              <Button
+                cn='btnTransfer'
+                text='Перевести'
+                type="submit"/>
+            </div>
           </form>
 
         </div>

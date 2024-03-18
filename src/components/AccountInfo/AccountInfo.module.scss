@@ -167,7 +167,7 @@
 .staticWrap {
   // border: 1px solid green;
   display: grid;
-  grid-template-columns: repeat(3, max-content);
+  grid-template-columns: min-content 220px max-content;
   grid-template-areas: 
     'Btns Doughnut Value';
   justify-content: flex-start;
@@ -179,7 +179,7 @@
     grid-template-areas: 
     'Btns Btns'
     'Doughnut Value';
-     grid-template-columns: repeat(2, max-content);
+     grid-template-columns: 220px max-content;
    justify-content: center;
   }
 
@@ -189,7 +189,7 @@
     'Doughnut'
      'Value';
      grid-template-columns: 1fr;
-
+  justify-content: center;
   }
 
 }
@@ -198,7 +198,7 @@
   grid-area: Btns;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   align-items: flex-start;
 
   @include desktop1280 {
@@ -212,7 +212,22 @@
 .staticBtn {
   background-color: transparent;
   font-weight: 700;
-  border: none;
+  border: 1px solid transparent;
+  padding: 5px;
+  outline: none;
+  border-radius: 6px;
+
+  &:hover {
+    color: var(--borderColor);
+  }
+
+  &:focus {
+    color: var(--borderColor);
+  }
+
+  &:focus-visible {
+    border-color: var(--borderColor);
+  }
 }
 
 .DoughnutChart {
@@ -300,11 +315,40 @@ margin-left: 26px;
   justify-content: space-between;
   align-items: flex-end;
   gap: 20px;
+
+  @include desktop1280 {
+    gap: 15px;
+  }
+
+  @include tablet850 {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @include tablet650 {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .labelWrap {
-  width: 380px;
+  width: 33%;  
   color: var(--colorText);
+
+  @include desktop1280 {
+    width: 35%;
+  }
+
+  @include tablet850 {
+    width: 48.5%;
+  }
+  @include tablet650 {
+    width: 100%;
+
+    &:nth-child(2) {      
+      margin-bottom: 10px;
+    }
+  }
 }
 
 .label {
@@ -313,15 +357,36 @@ margin-left: 26px;
 
 .input {
   width: 100%;
-  height: 66px;
+  height: 70px;
   border-radius: 10px;
   padding-left: 0;
   padding-left: 20px;
   border: 2px solid transparent;
+
+  @include desktop1280 {
+    padding-left: 4px;
+  }
+
+  @include tablet850 {
+    padding-left: 20px;
+    height: 55px;
+  }
 
   &:focus {
     outline: none;;
     // outline-color: red;
     border-color: var(--borderColor);
   }
+}
+
+.btnInputWrap {
+  width: 33%;
+
+  @include desktop1280 {
+    width: 30%;
+  }
+  @include tablet850 {
+    width: 100%;
+  }
+
 }

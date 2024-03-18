@@ -65,5 +65,9 @@
 }
 
 .btnTransfer {
-  width: 380px;
+  width: 100%;
+  
+  @include tablet850 {
+    height: 55px;
+  }
 }

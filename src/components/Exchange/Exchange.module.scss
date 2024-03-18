@@ -1,37 +1,80 @@
+@import '../../var.scss';
 .title {
+  padding-top: 100px;
   font-family: Comfortaa, Arial, sans-serif;
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 70px;
+
+  @include tablet850 {
+    padding-top: 70px;
+    margin-bottom: 40px;
+  }
+
+  @include tablet650 {
+    font-size: 22px;
+    padding-top: 40px;
+    margin-bottom: 20px;
+  }
 }
 
 .wrap {
-  display: flex;
+  display: grid;
+  grid-template-areas: 
+    'Websocket Form'
+    'Websocket MyCurrency';
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 80px;
+
+  @include tablet650 {
+    grid-template-areas: 
+    'Form Form'
+    'MyCurrency Websocket';
+    gap: 10px;
+  }
+
+
+  @include mobile480 {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      'Form'
+      'MyCurrency'
+      'Websocket';
+  }
 }
 
 .wrapForm {
+  grid-area: Form;
+  
 }
 
 .form {
+  grid-area: Form;
   position: relative;
   padding: 17px;
   background-color: var(--darkColor);
   border-radius: 10px;
   margin-bottom: 40px;
+
+  @include mobile480 {
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 }
 
 .fieldset {
+  border: none;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   gap: 35px;
-  border: none;
-  padding: 0;
-}
+  @include desktop1280 {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 
-fieldset {
 
 }
 
@@ -39,12 +82,34 @@ fieldset {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 14px;
+  
+  @include mobile480 {
+    font-size: 16px;
+  }
+}
+
+.innerForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  @include desktop1280 {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 }
 
 .wrapLabel {
   display: flex;
   flex-direction: column;
-  min-width: 160px;
+  width: 100%;
+  
+  @include desktop1280 {
+    width: 47%;
+    &:last-child {
+      width: 100%;      
+    }
+  }
+
 }
 
 .label {
@@ -75,6 +140,14 @@ select::-ms-expand {
 
 .input {
   border: 2px solid transparent;
+}
+
+.myCurrency {
+  grid-area: MyCurrency;
+  
+  @include mobile480 {
+    margin-bottom: 20px;
+  }
 }
 
 .myCurrencyBtn {
