@@ -1,16 +1,15 @@
 import axios from 'axios';
 import { URI_API } from '../../const-Interface/const';
-import { accountInfoSlice } from '../accountInfoSlice/accountInfoSlice';
+import { accountInfoSlice } from '../accountInfoStore/accountInfoSlice';
+
 
 /* eslint-disable no-unused-vars */
-export const postTransferRequestAsync = (
-    infoTransfer: {account: string, amount: number}
+export const transferRequestAsync = (
+    infoTransfer: {account: string, amount: string}
 ) =>
   (dispatch: any, getState: any) => {
     const token = getState().token.token;
-    console.log('token: ', token);
     const id = getState().info.info.account;
-    console.log('infoTransfer: ', infoTransfer);
 
     dispatch(accountInfoSlice.actions.postTransferRequest());
     axios.post(`${URI_API}transfer-funds`, {
@@ -23,10 +22,11 @@ export const postTransferRequestAsync = (
     })
       .then(({ data }) => {
         if (data.error) {
-          console.log(data);
           dispatch(accountInfoSlice.actions.postTransferRequestError(data));
         } else {
-          dispatch(accountInfoSlice.actions.postTransferRequestSuccess(data));
+          dispatch(
+            accountInfoSlice.actions.postTransferRequestSuccess(data.payload)
+          );
         }
       })
     ;

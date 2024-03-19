@@ -15,7 +15,6 @@ type Props = {
 };
 
 export const LineChart = ({ dataInput }: Props) => {
-  console.log('dataInput: ', dataInput);
   const nameMonth = [
     'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
     'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];

@@ -8,17 +8,20 @@ import { ItemAccount } from './ItemAccount/ItemAccount';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import {
-  accountAddAsync, accountRequestAsync
+  accountAddAsync, accountsRequestAsync
 } from '../../store/accountsStore/accountAsyncAction';
 import { accountsSlice } from '../../store/accountsStore/accountsSlice';
 import { tokenSlice } from '../../store/tokenStore/tokenSlice';
 import { funcSort } from '../../utils/sort';
 import { SelectList } from '../SelectList/SelectList';
-import { IAccount } from '../../const-Interface/interface';
+import { IAccountItem } from '../../const-Interface/interface';
+import { getSavedToken } from '../../utils/getSavedToken';
+import { Loader } from '../Loader/Loader';
 
 export const Accounts = () => {
-  const token = useAppSelector(state => state.token.token) ||
-  localStorage.getItem('token');
+  const token = getSavedToken();
+  const isLoading = useAppSelector(state => state.accounts.isLoading);
+
   const dispatch = useAppDispatch();
 
   const listAccounts = useAppSelector(state => state.accounts.accounts);
@@ -29,10 +32,9 @@ export const Accounts = () => {
   };
 
   useEffect(() => {
-    console.log('UseEffect 3333333');
     dispatch(tokenSlice.actions.updateToken(token));
-    dispatch(accountRequestAsync('accounts'));
-    // if (!isLoading || listAccounts) {
+    dispatch(accountsRequestAsync());
+
     if (listAccounts) {
       const newSortList = funcSort('По дате', listAccounts);
       dispatch(accountsSlice.actions.sortAccounts(newSortList));
@@ -45,7 +47,7 @@ export const Accounts = () => {
         <div className={style.wrapAccounts}>
           <div className={style.wrapTitle}>
             <p className={style.title}>Здравствуйте, Guest!</p>
-            <div className={style.wrapAccountBtn}>
+            <div className={style.wrapAddAccountBtn}>
               <Button
                 cn='btnAccounts'
                 text='Открыть новый счет'
@@ -65,14 +67,20 @@ export const Accounts = () => {
             </div>
           </div>
 
-          <ul className={style.listAccounts}>
-            {listAccounts.map((item: IAccount) => (
-              <ItemAccount
-                key={Math.random().toString(16).slice(2, 8)} data={item}
-              />
+          {
+            isLoading ? (
+              <Loader />
+            ) : (
+              <ul className={style.listAccounts}>
+                {listAccounts.map((item: IAccountItem) => (
+                  <ItemAccount
+                    key={Math.random().toString(16).slice(2, 8)} data={item}
+                  />
+                )
+                )}
+              </ul>
             )
-            )}
-          </ul>
+          }
         </div>
 
       </Container>

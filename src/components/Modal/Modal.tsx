@@ -1,10 +1,10 @@
-import style from './ErrorModal.module.scss';
+import style from './Modal.module.scss';
 
 type Props = {
   text: string;
 };
 
-export const ErrorModal = ({ text }: Props) => {
+export const Modal = ({ text }: Props) => {
   console.log();
 
   return (

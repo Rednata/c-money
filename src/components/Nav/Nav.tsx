@@ -12,7 +12,6 @@ export const Nav = () => {
   const dispatch = useAppDispatch();
   const [disabledAccountsLink, setDisabledAccountsLink] = useState(true);
   const [disabledExchangeLink, setDisabledExchangeLink] = useState(true);
-  console.log('FIRST');
 
   const [showNavList, setShowNavList] = useState(false);
   const [showBurger, setShowBurger] = useState(false);
@@ -45,7 +44,6 @@ export const Nav = () => {
 
   // console.log('mediaQuery: ', mediaQuery);
   const showMenu = (e: MediaQueryListEvent) => {
-    console.log('SHOWMENU');
     if (e.matches) {
       setShowBurger(true);
       setShowNavList(false);
@@ -88,7 +86,6 @@ export const Nav = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    console.log('USEEFFECT');
     if (isSmallWindowSize()) {
       setShowBurger(true);
       setShowNavList(false);

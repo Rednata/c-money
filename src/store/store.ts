@@ -2,9 +2,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import tokenReducer from './tokenStore/tokenSlice';
 import accountsSlice from './accountsStore/accountsSlice';
 import { tokenMiddleware } from './tokenStore/tokenAsyncAction';
-import accountInfoReducer from './accountInfoSlice/accountInfoSlice';
+import accountInfoReducer from './accountInfoStore/accountInfoSlice';
 import allCurrencyReducer from './currencyStore/currencySlice';
-
 
 const rootReducer = combineReducers({
   token: tokenReducer,

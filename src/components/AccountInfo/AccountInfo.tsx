@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
-import {
-  accountRequestAsync
-} from '../../store/accountsStore/accountAsyncAction';
 import { Container } from '../Container/Container';
 import style from './AccountInfo.module.scss';
 import { Button } from '../Button/Button';
@@ -17,39 +14,46 @@ import { DoughnutChart } from '../Charts/DoughnutChart';
 import moment from 'moment';
 import { getSum } from '../../utils/getSum';
 import {
-  postTransferRequestAsync
-} from '../../store/postTransferSlice/postTransferAction';
-import { ErrorModal } from '../ErrorModal/ErrorModal';
+  transferRequestAsync
+} from '../../store/transferStore/transferAction';
+import { Modal } from '../Modal/Modal';
 import { formatSum } from '../../utils/fomatSum';
 import { LineChart } from '../Charts/LineChart';
 import { ITransaction } from '../../const-Interface/interface';
+import { useEffectShowModal } from '../../hooks/useEffectShowModal';
+import { getSavedToken } from '../../utils/getSavedToken';
+import { tokenSlice } from '../../store/tokenStore/tokenSlice';
+import {
+  accountInfoRequestAsync
+} from '../../store/accountInfoStore/accountInfoAction';
+import { Loader } from '../Loader/Loader';
 
 
 export const AccountInfo = () => {
   const id = useLocation().hash.slice(1);
+  const token = getSavedToken();
 
-  const errorTransfer = useAppSelector(state => state.info.error);
-  const [showErrorModal, setshowErrorModal] = useState(false);
-  const [infoTransfer, setInfoTransfer] = useState({ account: '', amount: 0 });
+  const errorMessage = useAppSelector(state => state.info.error);
+  const showModalError = useEffectShowModal(errorMessage);
+  const successMessage = useAppSelector(state => state.info.isSuccess);
+  const showModalSuccess = useEffectShowModal(successMessage);
+  const isLoading = useAppSelector(state => state.info.isLoading);
 
-  const [balanceItems, setBalanceItems] = useState<number[]>([0, 0]);
-  console.log('balanceItems: ', balanceItems);
+  const [dataTransfer, setDataTransfer] = useState({ account: '', amount: '' });
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    navigate('/accounts');
-  };
-
-  const data = useAppSelector(state => state.info.info);
+  const [balanceItems, setBalanceItems] = useState<number[]>([0, 0]);
+  const transactions = useAppSelector(state => state.info.info.transactions);
   const balance = useAppSelector(state => state.info.info.balance);
 
-  const transactionsAll = data.transactions;
-  const transactionsHistory = transactionsAll.slice(-10).reverse();
+  const transactionsHistory = transactions.slice(-10).reverse();
+  console.log('transactions: ', transactions);
 
   let dataLineChart = [{ sum: 0, month: Number(new Date()) }];
-  if (transactionsAll.length >= 1) {
-    dataLineChart = countDate(transactionsAll, id, balance);
+  if (transactions.length >= 1) {
+    dataLineChart = countDate(transactions, id, balance);
   }
 
   const handleClickStatic = (
@@ -57,48 +61,44 @@ export const AccountInfo = () => {
     const currentDate = new Date();
     let arr: ITransaction[] = [];
     if (e.currentTarget.textContent === 'Неделя') {
-      arr = transactionsAll
+      arr = transactions
         .filter((elem: {date: Date}) =>
           moment(elem.date) >= moment(currentDate).subtract(7, 'days'));
     } else if (e.currentTarget.textContent === 'Месяц') {
-      arr = transactionsAll
+      arr = transactions
         .filter((elem: {date: Date}) =>
           moment(elem.date) >= moment(currentDate).subtract(24, 'month'));
     } else {
-      arr = transactionsAll
+      arr = transactions
         .filter((elem: {date: Date}) =>
           moment(elem.date) >= moment(currentDate).subtract(3, 'year'));
     }
     setBalanceItems(getSum(arr, id));
   };
 
+  const handleClick = () => {
+    navigate('/accounts');
+  };
+
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    dispatch(postTransferRequestAsync(infoTransfer));
-    console.warn('errorTransfer: ', errorTransfer);
+    dispatch(transferRequestAsync(dataTransfer));
+    setDataTransfer({ account: '', amount: '' });
   };
 
   const handleChange = (e: React.ChangeEvent<EventTarget>) => {
     if (e.target instanceof HTMLInputElement) {
       if (e.target.id === 'account') {
-        setInfoTransfer({ ...infoTransfer, account: e.target.value });
+        setDataTransfer({ ...dataTransfer, account: e.target.value });
       } else if (e.target.id === 'amount') {
-        setInfoTransfer({ ...infoTransfer, amount: Number(e.target.value) });
+        setDataTransfer({ ...dataTransfer, amount: (e.target.value) });
       }
     }
   };
 
   useEffect(() => {
-    if (errorTransfer) {
-      setshowErrorModal(true);
-      setTimeout(() => {
-        setshowErrorModal(false);
-      }, 1500);
-    }
-  }, [errorTransfer]);
-
-  useEffect(() => {
-    dispatch(accountRequestAsync(`account/${id}`));
+    dispatch(tokenSlice.actions.updateToken(token));
+    dispatch(accountInfoRequestAsync(id));
   }, []);
 
   const classNameAmount = (!balanceItems[0] && !balanceItems[1] ?
@@ -115,37 +115,48 @@ export const AccountInfo = () => {
         </div>
         <div className={style.wrap}>
           <div className={style.chart}>
-            <LineChart dataInput={dataLineChart} />
+            {
+              !isLoading ? (<LineChart dataInput={dataLineChart} />
+              ) : (
+                <Loader />
+              )
+            }
           </div>
-          <div className={style.history}>
-            <table cellSpacing={24} className={style.table}>
-              <thead className={style.thead}>
-                <tr>
-                  <th>Счет</th>
-                  <th>Сумма</th>
-                  <th>Дата</th>
-                </tr>
-              </thead>
-              <tbody className={style.tbody}>
-                {transactionsHistory.map(({ date, from, amount }) =>
-                  (
-                    <tr
-                      className={style.tr}
-                      key={Math.random().toString(16).slice(2, 8)}>
-                      <td>{from}</td>
-                      {from === id ?
-                      (<td className={style.amountColor}>-{amount}</td>
-                      ) : (
-                      <td>+{amount}</td>)
-                      }
-                      <td>{formatDate(date)}</td>
+          {
+            !isLoading ? (
+              <div className={style.history}>
+                <table cellSpacing={24} className={style.table}>
+                  <thead className={style.thead}>
+                    <tr>
+                      <th>Счет</th>
+                      <th>Сумма</th>
+                      <th>Дата</th>
                     </tr>
-                  )
-                )}
-              </tbody>
+                  </thead>
+                  <tbody className={style.tbody}>
+                    {transactionsHistory.map(({ date, from, amount }) =>
+                      (
+                        <tr
+                          className={style.tr}
+                          key={Math.random().toString(16).slice(2, 8)}>
+                          <td>{from}</td>
+                          {from === id ?
+                          (<td className={style.amountColor}>-{amount}</td>
+                          ) : (
+                          <td>+{amount}</td>)
+                          }
+                          <td>{formatDate(date)}</td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
 
-            </table>
-          </div>
+                </table>
+              </div>
+            ) : (
+              <Loader />
+            )
+          }
 
           <div className={style.static}>
             <h2 className={style.title}>Статистика</h2>
@@ -202,7 +213,12 @@ export const AccountInfo = () => {
         </div>
         <div className={style.transfer}>
           <h2 className={style.title}>Перевод</h2>
-          {showErrorModal && <ErrorModal text={errorTransfer} />}
+          {
+            showModalError && <Modal text={errorMessage} />
+          }
+          {
+            showModalSuccess && <Modal text='Перевод выполнен успешно' />
+          }
           <form className={style.form} onSubmit={handleSubmit}>
             <div className={style.labelWrap}>
               <label htmlFor='account' className={style.label} />Счет
@@ -212,6 +228,7 @@ export const AccountInfo = () => {
                 id='account'
                 required
                 onChange={handleChange}
+                value={dataTransfer.account}
               />
             </div>
             <div className={style.labelWrap}>
@@ -224,6 +241,7 @@ export const AccountInfo = () => {
                 pattern="[0123456789]"
                 min="1"
                 onChange={handleChange}
+                value={dataTransfer.amount}
               />
             </div>
 

@@ -7,7 +7,6 @@ const initialState: IToken = {
   token: '',
   error: '',
   isLoading: false,
-  temp: 'start'
 };
 
 export const tokenSlice = createSlice({

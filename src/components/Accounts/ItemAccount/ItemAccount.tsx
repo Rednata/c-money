@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils/formatDate';
 import style from './ItemAccount.module.scss';
 import { ITransaction } from '../../../const-Interface/interface';
+import { formatSum } from '../../../utils/fomatSum';
 
 type Props = {
   data: {
@@ -27,7 +28,7 @@ export const ItemAccount = ({ data }: Props) => {
       <Link to={`/accounts/acc#${account}`}>
         <p className={style.numAccount}>{account}</p>
         <p className={style.balance}>{
-          (new Intl.NumberFormat('ru-RU').format(balance))
+          (formatSum(balance))
         } &#8381;</p>
         <div className={style.wrapDates}>
           <div className="">

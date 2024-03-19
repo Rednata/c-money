@@ -1,5 +1,10 @@
+export interface IToken {
+  token: string;
+  error: string;
+  isLoading: boolean;
+}
 
-export interface IAccount {
+export interface IAccountItem {
   account: string;
   date: string;
   balance: number;
@@ -7,16 +12,17 @@ export interface IAccount {
   transactions: [];
 }
 
-export interface IArrayAccounts {
-  accounts: IAccount[];
+export interface IAccounts {
+  accounts: IAccountItem[];
   error: string;
   isLoading: boolean;
 }[];
 
 export interface IAccountInfo {
   isLoading: boolean;
-  info: IAccount;
+  isSuccess: 'success' | '';
   error: string;
+  info: IAccountItem;
 }
 
 export interface ICurrency {
@@ -32,11 +38,4 @@ export interface ITransaction {
   date: string;
   from: string;
   to: string;
-}
-
-export interface IToken {
-  token: string;
-  error: string;
-  isLoading: boolean;
-  temp: string;
 }

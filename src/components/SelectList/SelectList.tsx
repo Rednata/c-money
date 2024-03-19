@@ -16,6 +16,9 @@ export const SelectList = () => {
   const [sortList, setSortList] = useState(
     list.filter(item => item !== valueSort));
 
+  const handleClickBtnSort = () =>
+    setisActivebtnSort(!isActivebtnSort);
+
   const handleSortItem = (e: React.MouseEvent<HTMLLIElement>) => {
     if (e.currentTarget.textContent) {
       setValueSort(e.currentTarget.textContent);
@@ -33,7 +36,7 @@ export const SelectList = () => {
     <>
       <button className={isActivebtnSort ?
         style.activeBtnSort : style.btnSort}
-      onClick={() => setisActivebtnSort(!isActivebtnSort)}>
+      onClick={handleClickBtnSort}>
         {valueSort} &#9660;
       </button>
       {

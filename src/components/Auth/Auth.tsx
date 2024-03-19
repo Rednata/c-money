@@ -7,23 +7,26 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooksStore';
 import { tokenRequestAsync } from '../../store/tokenStore/tokenAsyncAction';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
-import { ErrorModal } from '../ErrorModal/ErrorModal';
-import { useEffectShowModal } from '../../hooks/useEffectShowModal';
+import { Modal } from '../Modal/Modal';
+import { useEffectShowModalAuth } from '../../hooks/useEffectShowModal';
 
 export const Auth = () => {
   const [valueInput, setValueInput] = useState({
     login: '', password: ''
   });
-  const [hiddenPassword, setHiddenPassword] = useState(true);
   const [auth, setAuth] = useState({ login: '', password: '' });
+  const [hiddenPassword, setHiddenPassword] = useState(true);
 
   const errorMessage = useAppSelector(state => state.token.error);
   const token = useAppSelector(state => state.token.token);
+
   const loginInput = useRef<HTMLInputElement>(null); //  для фокуса
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const showModalError = useEffectShowModal(errorMessage);
-  const showModalSuccess = useEffectShowModal(token);
+
+  const showModalError = useEffectShowModalAuth(errorMessage);
+
+  const showModalSuccess = useEffectShowModalAuth(token);
 
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
@@ -64,8 +67,8 @@ export const Auth = () => {
       <div className={style.wrapAuth}>
         <h1 className='visually-hidden'>Форма для авторизации</h1>
         <form className={style.form} onSubmit={handleSubmit}>
-          {showModalError && <ErrorModal text={errorMessage}/>}
-          {showModalSuccess && <ErrorModal text='Вы успешно авторизовались'/>}
+          {showModalError && <Modal text={errorMessage}/>}
+          {showModalSuccess && <Modal text='Вы успешно авторизовались'/>}
           <h2 className={style.title}>Вход в аккаунт</h2>
           <label
             className={style.label}

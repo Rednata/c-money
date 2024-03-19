@@ -13,8 +13,6 @@ export const countDate = (arr: any, id: string, balance: number) => {
       console.log();
       return a.date > b.date ? 1 : -1;
     });
-  console.log('sliceArray: ', sliceArray);
-
 
   const arrOfMonths = sliceArray
     .reduce((
@@ -22,17 +20,12 @@ export const countDate = (arr: any, id: string, balance: number) => {
         elem: ITransaction, i: number, arr: ITransaction[]) => {
       const tempArr: ITransaction[] = [];
       if (arr[i + 1]) {
-        console.log(new Date(arr[i].date).getMonth());
-        console.log(new Date(arr[i + 1].date).getMonth());
         if (
           new Date(arr[i].date).getMonth() ===
           new Date(arr[i + 1].date).getMonth()
         ) {
-          console.log('===========');
-
           tempArr.push(arr[i]);
         } else {
-          console.log('tempArr: ', tempArr);
           acc.push(tempArr);
           if (elem === arr[arr.length - 1]) {
             acc.push(tempArr);
@@ -45,7 +38,6 @@ export const countDate = (arr: any, id: string, balance: number) => {
       return acc;
     }, []);
 
-  console.log('arrOfMonths: ', arrOfMonths);
   return [];
 };
 

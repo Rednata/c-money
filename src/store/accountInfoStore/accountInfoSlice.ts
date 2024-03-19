@@ -3,6 +3,7 @@ import { IAccountInfo } from '../../const-Interface/interface';
 
 const initialState: IAccountInfo = {
   isLoading: false,
+  isSuccess: '',
   info: {
     account: '',
     balance: 0,
@@ -19,27 +20,34 @@ export const accountInfoSlice = createSlice({
   reducers: {
     infoRequest: (state) => {
       state.isLoading = true;
+      state.isSuccess = '';
+      state.error = '';
     },
     infoRequestSuccess: (state, action) => {
       state.isLoading = false;
+      state.isSuccess = '';
       state.info = action.payload;
-      console.log(action);
+      state.error = '';
     },
     infoRequestError: (state, action) => {
-      console.log(action);
       state.isLoading = false;
+      state.isSuccess = '';
+      state.error = action.payload.error;
     },
     postTransferRequest: (state) => {
       state.isLoading = true;
+      state.isSuccess = '';
       state.error = '';
     },
     postTransferRequestSuccess: (state, action) => {
+      state.info = action.payload;
       state.isLoading = false;
+      state.isSuccess = 'success';
       state.error = '';
     },
     postTransferRequestError: (state, action) => {
-      console.log('action: ', action.payload.error);
       state.isLoading = false;
+      state.isSuccess = '';
       state.error = action.payload.error;
     },
   }

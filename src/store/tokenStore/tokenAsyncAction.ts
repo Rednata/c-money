@@ -16,14 +16,12 @@ interface IAuth {
 
 export const tokenRequestAsync = (data: IAuth) =>
   (dispatch: any) => {
-    console.log('data:>>>>>>>>>>> ', data);
     dispatch(tokenSlice.actions.tokenRequest());
     axios.post(`${URI_API}login`, {
       login: data.login,
       password: data.password,
     })
       .then(({ data }) => {
-        console.log(data);
         if (data.error) {
           dispatch(tokenSlice.actions.tokenRequestError(data.error));
         } else {

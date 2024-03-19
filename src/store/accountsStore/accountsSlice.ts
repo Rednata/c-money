@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAccount, IArrayAccounts } from '../../const-Interface/interface';
+import { IAccountItem, IAccounts } from '../../const-Interface/interface';
 
-const initialState: IArrayAccounts = {
+const initialState: IAccounts = {
   accounts: [],
   error: '',
   isLoading: false
@@ -14,14 +14,13 @@ export const accountsSlice = createSlice({
     addAccountRequest: (state) => {
       state.isLoading = true;
     },
-    addAccountRequestSuccess: (state, action: PayloadAction<IAccount>) => {
+    addAccountRequestSuccess: (state, action: PayloadAction<IAccountItem>) => {
       state.isLoading = false;
       state.error = '';
       state.accounts.push(action.payload);
     },
     addAccountRequestError: (state, action) => {
       state.isLoading = false;
-      console.log('action: ', action);
     },
     accountsRequest: (state) => {
       state.isLoading = true;
@@ -33,12 +32,10 @@ export const accountsSlice = createSlice({
       state.accounts = action.payload;
     },
     accountsRequestError: (state, action) => {
-      console.log('action: ', action);
       state.isLoading = false;
     },
     sortAccounts: (state, action) => {
       state.accounts = action.payload;
-      state.isLoading = false;
       state.error = '';
     }
   },

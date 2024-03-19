@@ -6,8 +6,10 @@ import {
   getCurrencyRequestAsync, postCurrencyRequestAsync
 } from '../../store/currencyStore/currencyAction';
 import { formatSum } from '../../utils/fomatSum';
-import { ErrorModal } from '../ErrorModal/ErrorModal';
+import { Modal } from '../Modal/Modal';
 import { WebsocketInfo } from '../WebsocketInfo/WebsocketInfo';
+import { getToken } from '../../hooks/storeToken';
+import { tokenSlice } from '../../store/tokenStore/tokenSlice';
 // import { Loader } from '../Loader/Loader';
 
 export const Exchange = () => {
@@ -16,6 +18,7 @@ export const Exchange = () => {
   const isSuccess = useAppSelector(state => state.currency.isSuccess);
   const errorMessage = useAppSelector(state => state.currency.error);
 
+  const token = getToken();
   const [
     showSuccessTransferModal, setShowSuccessTransferModal
   ] = useState(false);
@@ -40,7 +43,6 @@ export const Exchange = () => {
 
   const handleChange = (e: React.ChangeEvent<EventTarget>) => {
     if (e.target instanceof HTMLSelectElement) {
-      console.log(123);
       if (e.target.id === 'from') {
         setValueSelect({ ...valueSelect, from: e.target.value });
       } else {
@@ -77,6 +79,7 @@ export const Exchange = () => {
   }, [isSuccess]);
 
   useEffect(() => {
+    dispatch(tokenSlice.actions.updateToken(token));
     dispatch(getCurrencyRequestAsync('all-currencies'));
     dispatch(getCurrencyRequestAsync('currencies'));
   }, []);
@@ -90,9 +93,9 @@ export const Exchange = () => {
           className={style.form}
           onSubmit={handleSubmit}
         >
-          {showErrorModal && <ErrorModal text={errorMessage} />}
+          {showErrorModal && <Modal text={errorMessage} />}
           {showSuccessTransferModal &&
-            <ErrorModal text='Перевод успешно отправлен' />
+            <Modal text='Перевод успешно отправлен' />
           }
 
           <fieldset className={style.fieldset}>
