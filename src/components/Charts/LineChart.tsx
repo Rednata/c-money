@@ -15,19 +15,23 @@ type Props = {
 };
 
 export const LineChart = ({ dataInput }: Props) => {
+  console.log('dataInput: ', dataInput);
   const nameMonth = [
     'Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
     'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
 
+  console.log(dataInput.map(elem => elem.sum));
   const data = {
     labels: dataInput.map(elem => nameMonth[elem.month]),
     datasets: [
       {
-        label: 'My First Dataset',
+        label: 'Динамика',
         data: dataInput.map(elem => elem.sum),
+        borderColor: '#b865d6',
+        backgroundColor: '#fff',
+        // backgroundColor: '#b865d6',
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
+        // tension: 0.1
       }
     ]
   };
@@ -42,6 +46,7 @@ export const LineChart = ({ dataInput }: Props) => {
   //     }
   //   }
   // };
+  console.log('data: ', data);
   return (
     <div>
       <Line data={data} options={options}/>

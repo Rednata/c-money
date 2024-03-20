@@ -67,9 +67,11 @@
 }
 
 .chart {
-  grid-area: chart;
-  border: 1px solid red;
+  grid-area: chart;  
+  padding: 16px 20px;
   margin-bottom: 90px;
+  background-color: var(--darkColor);
+  border-radius: 10px;
 
   @include desktop1280 {
     margin-bottom: 0;

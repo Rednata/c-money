@@ -52,9 +52,11 @@ export const AccountInfo = () => {
 
   const transactionsHistory = transactions.slice(-10).reverse();
 
-  let dataLineChart = [{ sum: 0, month: Number(new Date()) }];
+  // let dataLineChart = [{ sum: 0, month: Number(new Date()) }];
+  let dataLineChart: any[] = [];
   if (transactions.length >= 1) {
     dataLineChart = countDate(transactions, id, balance);
+    console.log('dataLineChart: ', dataLineChart);
   }
 
   const handleClickStatic = (
@@ -121,7 +123,7 @@ export const AccountInfo = () => {
         <div className={style.wrap}>
           <div className={style.chart}>
             {
-              !isLoading ? (<LineChart dataInput={dataLineChart} />
+              dataLineChart.length ? (<LineChart dataInput={dataLineChart} />
               ) : (
                 <Loader />
               )
