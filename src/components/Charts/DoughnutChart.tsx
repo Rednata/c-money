@@ -12,11 +12,6 @@ type Props = {
 export const DoughnutChart = ({ balanceItems }: Props) => {
   const [income, spending] = balanceItems;
 
-  let title = '';
-  if (!income && !spending) {
-    title = 'НЕТ ДАННЫХ';
-  }
-
   const options = {
     text: {
       display: true,
@@ -54,9 +49,9 @@ export const DoughnutChart = ({ balanceItems }: Props) => {
       },
       title: {
         display: true,
-        text: `${title}`,
+        text: `sdfsdf`,
         color: '#c6b6d7',
-        position: 'top' as const,
+        position: 'left' as const,
         font: {
           size: 40,
           family: 'Nunito, Arial, sans-serif'

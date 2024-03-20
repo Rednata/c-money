@@ -27,7 +27,9 @@ import {
   accountInfoRequestAsync
 } from '../../store/accountInfoStore/accountInfoAction';
 import { Loader } from '../Loader/Loader';
-
+import {
+  accountInfoSlice
+} from '../../store/accountInfoStore/accountInfoSlice';
 
 export const AccountInfo = () => {
   const id = useLocation().hash.slice(1);
@@ -49,7 +51,6 @@ export const AccountInfo = () => {
   const balance = useAppSelector(state => state.info.info.balance);
 
   const transactionsHistory = transactions.slice(-10).reverse();
-  console.log('transactions: ', transactions);
 
   let dataLineChart = [{ sum: 0, month: Number(new Date()) }];
   if (transactions.length >= 1) {
@@ -99,6 +100,10 @@ export const AccountInfo = () => {
   useEffect(() => {
     dispatch(tokenSlice.actions.updateToken(token));
     dispatch(accountInfoRequestAsync(id));
+
+    return () => {
+      dispatch(accountInfoSlice.actions.infoRequestRemove());
+    };
   }, []);
 
   const classNameAmount = (!balanceItems[0] && !balanceItems[1] ?
@@ -177,9 +182,11 @@ export const AccountInfo = () => {
                   onClick={handleClickStatic}
                 >Год</button>
               </div>
-
               <div className={style.DoughnutChart}>
+
                 <DoughnutChart balanceItems={balanceItems}/>
+                {/* <div className={style.noData}>Нет данных</div> */}
+
               </div>
 
               <div className={style.wrapValue}>

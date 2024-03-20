@@ -232,6 +232,7 @@
 
 .DoughnutChart {
   grid-area: Doughnut;
+  position: relative;
   padding: 5px;
   width: 220px;
   height: 220px;
@@ -239,6 +240,18 @@
   @include tablet650 {
     margin: 0 auto;    
   }
+}
+
+.noData {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  font-size: 20px;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
 }
 
 .wrapValue {
@@ -251,7 +264,8 @@
   min-width: 100px;
 
   @include tablet650 {
-    align-items: center;
+    // align-items: center;
+    margin-left: calc(30vw);
   }
 }
 

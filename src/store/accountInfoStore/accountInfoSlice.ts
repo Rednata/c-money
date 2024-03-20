@@ -34,6 +34,12 @@ export const accountInfoSlice = createSlice({
       state.isSuccess = '';
       state.error = action.payload.error;
     },
+    infoRequestRemove: (state) => {
+      state.isLoading = false;
+      state.isSuccess = '';
+      state.info = initialState.info;
+      state.error = '';
+    },
     postTransferRequest: (state) => {
       state.isLoading = true;
       state.isSuccess = '';
