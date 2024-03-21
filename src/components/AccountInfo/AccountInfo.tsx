@@ -122,8 +122,10 @@ export const AccountInfo = () => {
         </div>
         <div className={style.wrap}>
           <div className={style.chart}>
+            <p className={style.chartTitle}>Динамика</p>
             {
-              dataLineChart.length ? (<LineChart dataInput={dataLineChart} />
+              dataLineChart.length ?
+              (<LineChart dataInput={dataLineChart} balance={balance}/>
               ) : (
                 <Loader />
               )
