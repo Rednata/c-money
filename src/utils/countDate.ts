@@ -38,12 +38,14 @@ export const countDate = (arr: any, id: string, balance: number) => {
         const currentElemDate = moment(elem.date).date(1).format();
 
         while (currentElemDate > startDate1) {
-          arrMonths.push([moment(startDate1).subtract(1, 'month').format()]);
+          arrMonths.push([
+            { date: moment(startDate1).format(), amount: 0 }
+          ]);
           startDate1 =
         moment(startDate1).add(1, 'month').date(1).format();
         }
         tempElem = { ...elem };
-        // tempArr = [moment(startDate1).subtract(1, 'month').format()];
+        tempArr = [];
       } else {
         tempArr = [];
         tempArr.push(elem);
@@ -56,27 +58,26 @@ export const countDate = (arr: any, id: string, balance: number) => {
   });
   console.log(arrMonths);
 
-  const sumMonths = arrMonths.map(
+  let monthBalance = balance;
+  const arrReverse = [...arrMonths].reverse();
+  const sumMonths = arrReverse.map(
     (elem: any): {sum: number, month: number| string} => {
       console.log();
-
       const sum = elem.reduce(
         (acc: number, res: {from: string, amount: number}) => {
           console.log();
           return res.from === id ? acc - res.amount : acc + res.amount;
         }, 0);
-
-      if (elem[0].date) {
-        return (
-          { sum: +(balance - sum).toFixed(2),
-            month: moment(elem[0].date).month() });
-      } else {
-        return {
-          sum: balance, month: moment(elem[0]).month() };
-      }
+      monthBalance -= sum;
+      console.log('sum: ', sum);
+      console.log('monthBalance: ', monthBalance);
+      return (
+        {
+          sum: +monthBalance.toFixed(2),
+          month: moment(elem[0].date).month()
+        });
     });
 
-  // sumMonths.push({ sum: balance, month: moment().format('DD.MM') });
-  return sumMonths;
+  return sumMonths.reverse();
 };
 
