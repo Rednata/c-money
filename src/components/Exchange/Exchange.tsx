@@ -28,10 +28,18 @@ export const Exchange = () => {
       { from: 'AUD', to: 'ETH', amount: 0 }
     );
 
+  // type elem = {
+  // elem: string | {code: string, amount: number}
+  // elem: [string, {code: string, amount: number}]
+  // };
+
   const allCurrency = useAppSelector(state => state.currency.allCurrency);
   const userCurrency = Object
     .entries(useAppSelector(state => state.currency.userCurrency))
-    .map((elem: any) => {
+    .map((elem: any[]) => {
+    // .map((elem: (string | {code: string, amount: number})[]) => {
+      console.log('elem: ', elem);
+      // .map((elem: {amount: number, code: string}) => {
       const { amount, code } = elem[1];
       return ([elem[0], amount, code]);
     });

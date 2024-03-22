@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { URI_API } from '../../const-Interface/const';
 import { allCurrencySlice } from './currencySlice';
+import { AppDispatch, AppGetState } from '../store';
 
 export const getCurrencyRequestAsync = (param: string) =>
-  (dispatch: any, getState: any) => {
+  (dispatch: AppDispatch, getState: AppGetState) => {
     const token = getState().token.token;
     dispatch(allCurrencySlice.actions.currencyRequest());
 
@@ -26,7 +27,7 @@ export const getCurrencyRequestAsync = (param: string) =>
 
 export const postCurrencyRequestAsync = (
     valueSelect: {from: string, to: string, amount: number}) =>
-  (dispatch: any, getState: any) => {
+  (dispatch: AppDispatch, getState: AppGetState) => {
     const token = getState().token.token;
     dispatch(allCurrencySlice.actions.currencyRequest());
     axios.post(`${URI_API}currency-buy`, {

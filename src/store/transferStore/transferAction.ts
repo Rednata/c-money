@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { URI_API } from '../../const-Interface/const';
 import { accountInfoSlice } from '../accountInfoStore/accountInfoSlice';
+import { AppDispatch, AppGetState } from '../store';
 
 
 /* eslint-disable no-unused-vars */
 export const transferRequestAsync = (
     infoTransfer: {account: string, amount: string}
 ) =>
-  (dispatch: any, getState: any) => {
+  (dispatch: AppDispatch, getState: AppGetState) => {
     const token = getState().token.token;
     const id = getState().info.info.account;
 

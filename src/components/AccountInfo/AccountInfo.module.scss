@@ -173,7 +173,6 @@
 }
 
 .staticWrap {
-  // border: 1px solid green;
   display: grid;
   grid-template-columns: min-content 220px max-content;
   grid-template-areas: 
@@ -187,7 +186,7 @@
     grid-template-areas: 
     'Btns Btns'
     'Doughnut Value';
-     grid-template-columns: 220px max-content;
+     grid-template-columns: 220px calc(max-content + 5%);
    justify-content: center;
   }
 
@@ -265,20 +264,17 @@
 .wrapValue {
   grid-area: Value;
   display: flex;
-  flex-direction: column;
   gap: 16px;
-  // border: 1px solid red;
-  flex-shrink: 0;
-  min-width: 100px;
-
+  flex-direction: column;  
   @include tablet650 {
-    // align-items: center;
-    margin-left: calc(30vw);
+    margin: 0 auto;
+    // align-items: center;  
   }
 }
 
 .labelName {
   min-width: 70px;
+  
 }
 
 .valueName, 
@@ -288,6 +284,10 @@
   gap: 10px;
   align-items: center;
   color: var(--colorText);
+
+  @include tablet650 {
+    justify-content: space-between;
+  }
 }
 
 .valueName {
@@ -317,12 +317,12 @@ margin-left: 26px;
     background-color: var(--borderColor);
   }
 }
-.textColor {
+.textColor {  
   font-weight: 700;
-  color: var(--text);
+  color: var(--text);  
 }
 
-.textTransparent {
+.textTransparent {  
   color: transparent;
 }
 

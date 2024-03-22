@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { URI_API } from '../../const-Interface/const';
 import { tokenSlice } from './tokenSlice';
+import { AppDispatch } from '../store';
 
-export const tokenMiddleware = () => (next: any) => (action: any) => {
-  if (action.type === 'token/updateToken') {
-    localStorage.setItem('token', action.payload);
-  }
-  next(action);
-};
+export const tokenMiddleware = () => (next: any) =>
+  (action: any) => {
+    if (action.type === 'token/updateToken') {
+      localStorage.setItem('token', action.payload);
+    }
+    next(action);
+  };
 
 interface IAuth {
   login: string;
@@ -15,7 +17,7 @@ interface IAuth {
 }
 
 export const tokenRequestAsync = (data: IAuth) =>
-  (dispatch: any) => {
+  (dispatch: AppDispatch) => {
     dispatch(tokenSlice.actions.tokenRequest());
     axios.post(`${URI_API}login`, {
       login: data.login,

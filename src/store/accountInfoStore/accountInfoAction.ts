@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { URI_API } from '../../const-Interface/const';
 import { accountInfoSlice } from '../accountInfoStore/accountInfoSlice';
+import { AppDispatch, AppGetState } from '../store';
 
 export const accountInfoRequestAsync = (id: string) =>
-  (dispatch: any, getState: any) => {
+  (dispatch: AppDispatch, getState: AppGetState) => {
     const token = getState().token.token;
     dispatch(accountInfoSlice.actions.infoRequest());
 

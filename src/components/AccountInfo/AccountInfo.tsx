@@ -53,10 +53,9 @@ export const AccountInfo = () => {
   const transactionsHistory = transactions.slice(-10).reverse();
 
   // let dataLineChart = [{ sum: 0, month: Number(new Date()) }];
-  let dataLineChart: any[] = [];
+  let dataLineChart: {sum: number, month: number}[] = [];
   if (transactions.length >= 1) {
     dataLineChart = countDate(transactions, id, balance);
-    console.log('dataLineChart: ', dataLineChart);
   }
 
   const handleClickStatic = (
@@ -124,12 +123,15 @@ export const AccountInfo = () => {
           <div className={style.chart}>
             <p className={style.chartTitle}>Динамика</p>
             {
-              dataLineChart.length ?
-              (<LineChart dataInput={dataLineChart} balance={balance}/>
-              ) : (
-                <Loader />
+              (!isLoading && !dataLineChart.length) ? <p>Нет данных</p> : (
+                !isLoading ?
+                (<LineChart dataInput={dataLineChart} balance={balance}/>
+                ) : (
+                  <Loader />
+                )
               )
             }
+
           </div>
           {
             !isLoading ? (
@@ -194,6 +196,7 @@ export const AccountInfo = () => {
               </div>
 
               <div className={style.wrapValue}>
+
                 <div className={style.valueName}>
                   <span className={style.labelName}>Баланс</span>
                   <span className={style[classNameAmount]}>
@@ -209,7 +212,7 @@ export const AccountInfo = () => {
                   </span>
                 </div>
                 <div className={style.valueNameSpending}>
-                  <span >Расходы</span>
+                  <span className={style.labelName}>Расходы</span>
                   <span className={style[classNameAmount]}>
                     {formatSum(balanceItems[1])
                     } &#8381;
@@ -218,7 +221,6 @@ export const AccountInfo = () => {
 
               </div>
             </div>
-            {/* <ChartLine /> */}
           </div>
 
         </div>

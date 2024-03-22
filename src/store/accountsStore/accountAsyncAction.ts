@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { accountsSlice } from './accountsSlice';
 import { URI_API } from '../../const-Interface/const';
+import { AppDispatch, AppGetState } from '../store';
 
 export const accountsRequestAsync = () =>
-  (dispatch: any, getState: any) => {
+  (dispatch: AppDispatch, getState: AppGetState) => {
     const token = getState().token.token;
     dispatch(accountsSlice.actions.accountsRequest());
 
@@ -21,21 +22,24 @@ export const accountsRequestAsync = () =>
       });
   };
 
-export const accountAddAsync = () => (dispatch: any, getState: any) => {
-  const token = getState().token.token;
+export const accountAddAsync = () =>
+  (dispatch: AppDispatch, getState: AppGetState) => {
+    const token = getState().token.token;
 
-  dispatch(accountsSlice.actions.addAccountRequest());
-  axios.post(`${URI_API}create-account`, {},
-    {
-      headers: {
-        Authorization: `Basic ${token}` }
-    })
-    .then(({ data }) => {
-      if (data.error) {
-        dispatch(accountsSlice.actions.addAccountRequestSuccess(data.error));
-      } else {
-        dispatch(accountsSlice.actions.addAccountRequestSuccess(data.payload));
-      }
-    });
-};
+    dispatch(accountsSlice.actions.addAccountRequest());
+    axios.post(`${URI_API}create-account`, {},
+      {
+        headers: {
+          Authorization: `Basic ${token}` }
+      })
+      .then(({ data }) => {
+        if (data.error) {
+          dispatch(accountsSlice.actions.addAccountRequestSuccess(data.error));
+        } else {
+          dispatch(
+            accountsSlice.actions.addAccountRequestSuccess(data.payload)
+          );
+        }
+      });
+  };
 

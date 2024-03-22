@@ -101,10 +101,13 @@ export const LineChart = ({ dataInput, balance }: Props) => {
   //     }
   //   }
   // };
-  console.log('data: ', data);
+
   return (
     <div>
-      <Line data={data} options={options}/>
+      <Line
+        data={data}
+        options={options}
+      />
     </div>
   );
 };
